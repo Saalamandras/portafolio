@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!--this is the part that link to .css file --> 
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Always first. Tells the browser to use UTF-8 encoding (supports all languages including IT, ES, PT) -->
+  <meta charset="UTF-8" />
+
+  <!-- Required for mobile. Without this, phones render a zoomed-out desktop view -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- The snippet Google shows under your link in search results. Keep under 160 characters -->
+  <meta name="description" content="Portfolio of P. Antonio Granados — AI & NLP Engineer, Prompt Engineer, and Computational Linguist based in Venice, Italy." />
+
+  <meta name="author" content="P. Antonio Granados" />
+
+  <!-- Open Graph: controls the preview card when you share this page on LinkedIn, WhatsApp, etc. -->
+  <meta property="og:title" content="P. Antonio Granados — AI & NLP Engineer" />
+  <meta property="og:description" content="Portfolio of an AI & NLP Engineer specializing in LLMs, RAG pipelines, and multilingual applications." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yoursite.com/" />
+
+  <!-- Canonical: the definitive URL for this page. Prevents duplicate content issues in Google -->
+  <link rel="canonical" href="https://yoursite.com/" />
+
+  <!-- hreflang: tells Google this page will have translations. Placeholders for now — JS will handle switching -->
+  <link rel="alternate" hreflang="en" href="https://yoursite.com/" />
+  <link rel="alternate" hreflang="es" href="https://yoursite.com/" />
+  <link rel="alternate" hreflang="it" href="https://yoursite.com/" />
+  <link rel="alternate" hreflang="pt" href="https://yoursite.com/" />
+
+  <!-- Browser tab title -->
+  <title>P. Antonio Granados — AI & NLP Engineer</title>
+</head>
+
+<body class="blueprint-bg">
+
+  <!-- HEADER wraps everything that is site-wide at the top: logo, nav, language switcher -->
+  <header>
+
+    <nav aria-label="Main navigation">
+
+      <!-- Your name as the brand. Always links back to the homepage -->
+      <a href="index.html" class="nav-brand">P. Antonio Granados</a>
+
+      <!-- Navigation links. href values are the actual filenames in your folder -->
+      <ul>
+        <li><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+        <li><a href="projects.html" class="nav-link">Projects</a></li>
+        <li><a href="articles.html" class="nav-link">Articles</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <!-- Language switcher — static for now. JavaScript will make this functional later -->
+      <div id="lang-switcher" aria-label="Language switcher">
+        <span>EN</span> | <span>ES</span> | <span>IT</span> | <span>PT</span>
+      </div>
+
+    </nav>
+
+  </header>
+
+  <!-- MAIN contains the content unique to this page. Only one <main> per page -->
+  <main>
+
+    <!-- HERO: the first thing a visitor sees. Your headline and value proposition -->
+    <section id="hero" aria-labelledby="hero-heading">
+      <h1 class="headline" id="hero-heading">AI &amp; NLP Engineer</h1>
+      <p class="body-text hero-subtitle">Prompt Engineer · Computational Linguist · Multilingual AI Developer</p>
+      <p class="body-text hero-location">Based in Venice, Italy</p>
+      <a href="projects.html" class="cta-button btn-primary btn-pressable">See My Projects</a>
+    </section>
+
+    <!-- ABOUT: your professional summary, taken directly from your CV -->
+    <section id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About Me</h2>      
+      <!-- Profile Avatar with HUD Viewfinder Corners -->
+      <div class="viewfinder-frame" style="width: 200px; margin: 24px 0 32px 0;">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <div class="reticle"></div>
+        <!-- TODO: Replace with actual avatar image -->
+        <img src="images/Profile_Picture_2026.png" alt="P. Antonio Granados" />
+      </div>
+            <p class="body-text">
+        Prompt Engineer and NLP specialist with hands-on experience at TELUS International and Appen, 
+        combined with an MSc in Computational Linguistics (LLM track) at Ca' Foscari University, Venice. 
+        Fluent in four languages and skilled across the full AI/NLP stack — from model fine-tuning and 
+        prompt optimization to multilingual content strategy and LLM deployment.
+      </p>
+      <p class="body-text">
+        I bring a rare combination of technical depth, linguistic expertise, instructional design, 
+        and domain knowledge in hospitality technology. Equally comfortable building and evaluating 
+        AI systems as writing the documentation, curriculum, or content that surrounds them.
+      </p>
+    </section>
+
+    <!-- SKILLS: your three competency columns from the CV -->
+    <section id="skills" aria-labelledby="skills-heading">
+      <h2 class="card-title" id="skills-heading">Core Competencies</h2>
+
+      <!-- Each column is a <div> with a class. CSS will turn these into columns later -->
+      <div class="skills-grid">
+
+        <div class="skill-category">
+          <h3 class="card-title">AI &amp; NLP Engineering</h3>
+          <ul>
+            <li>Prompt Engineering &amp; Optimization</li>
+            <li>LLM Fine-tuning (LoRA / RLHF)</li>
+            <li>NLP Pipeline Development</li>
+            <li>HuggingFace / Transformers</li>
+            <li>NLTK · SpaCy · OpenAI API</li>
+            <li>TensorFlow · PyTorch</li>
+            <li>Python · SQL</li>
+          </ul>
+        </div>
+
+        <div class="skill-category">
+          <h3 class="card-title">Language &amp; Content</h3>
+          <ul>
+            <li>Multilingual NLP (EN / ES / IT / PT)</li>
+            <li>UX Writing &amp; Copywriting</li>
+            <li>SEO / SEA Content Strategy</li>
+            <li>Web Translation &amp; Localisation</li>
+            <li>Technical Documentation</li>
+            <li>Instructional Design (e-learning)</li>
+          </ul>
+        </div>
+
+        <div class="skill-category">
+          <h3 class="card-title">Domain &amp; Tools</h3>
+          <ul>
+            <li>Oracle OPERA PMS / Cloud</li>
+            <li>Hospitality IT Operations</li>
+            <li>ETL Pipeline Concepts</li>
+            <li>Google Analytics / ADS</li>
+            <li>Slack · Trello · Office 365</li>
+            <li>JavaScript / TypeScript (basic)</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA SECTION: nudge the visitor toward your projects -->
+    <section id="cta" aria-labelledby="cta-heading">
+      <h2 class="card-title" id="cta-heading">Want to see what I build?</h2>
+      <p class="body-text">I work on AI systems, NLP tools, and multilingual applications. Take a look at my projects.</p>
+      <a href="projects.html" class="cta-button btn-primary btn-pressable">View Projects</a>
+    </section>
+
+  </main>
+
+  <!-- FOOTER: site-wide. Will be identical on all pages -->
+  <footer>
+    <p class="body-text">
+      &copy; 2026 P. Antonio Granados &mdash; 
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash; 
+      Mestre (VE), Italy
+    </p>
+  </footer>
+
+</body>
+</html>

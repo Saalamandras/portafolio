@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!--this is the part that link to .css file --> 
+  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       PER-ARTICLE SEO  —  EDIT ALL OF THESE FOR EVERY NEW ARTICLE.
+       These differ for each post (unlike the nav/footer which are shared).
+       ============================================================ -->
+
+  <!-- The search-result snippet. Summarize THIS article in <160 chars. -->
+  <meta name="description" content="ARTICLE_DESCRIPTION_HERE" />
+  <meta name="author" content="P. Antonio Granados" />
+
+  <!-- OPEN GRAPH — controls the preview card when this article is shared 
+       on LinkedIn, Facebook, WhatsApp, etc. Facebook IGNORES custom share 
+       text and uses these instead, so fill them in carefully. -->
+  <meta property="og:title" content="ARTICLE_TITLE_HERE" />
+  <meta property="og:description" content="ARTICLE_DESCRIPTION_HERE" />
+  <meta property="og:type" content="article" />
+  <!-- TODO: full URL of THIS article, e.g. https://yoursite.com/articles/my-slug.html -->
+  <meta property="og:url" content="ARTICLE_URL_HERE" />
+  <!-- TODO: the preview image (meme, graphic, screenshot). Use a FULL URL.
+       This is what shows when the link is shared. Don't leave empty. -->
+  <meta property="og:image" content="ARTICLE_IMAGE_URL_HERE" />
+
+  <!-- Twitter/X card — makes shares on X show a large image preview -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ARTICLE_TITLE_HERE" />
+  <meta name="twitter:description" content="ARTICLE_DESCRIPTION_HERE" />
+  <meta name="twitter:image" content="ARTICLE_IMAGE_URL_HERE" />
+
+  <!-- TODO: canonical = the full URL of this article -->
+  <link rel="canonical" href="ARTICLE_URL_HERE" />
+
+  <!-- Font Awesome — needed for the share + social icons below -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3w=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+
+  <!-- TODO: the browser-tab title for THIS article -->
+  <title>ARTICLE_TITLE_HERE | P. Antonio Granados</title>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER + NAV
+       Identical to the rest of the site. 
+       NOTE: this file lives in /articles/, one level DEEP. So links to 
+       the top-level pages need "../" in front (go up one folder).
+       That's why it's ../index.html here, not index.html.
+       ============================================================ -->
+  <header>
+    <nav aria-label="Main navigation">
+
+      <a href="../index.html" class="nav-brand">P. Antonio Granados</a>
+
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+        <!-- The article belongs to the Articles section, so mark it current -->
+        <li><a href="../articles.html" aria-current="page">Articles</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+
+      <div id="lang-switcher" aria-label="Language switcher">
+        <span>EN</span> | <span>ES</span> | <span>IT</span> | <span>PT</span>
+      </div>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- The whole post is ONE <article> — it's self-contained content -->
+    <article class="post">
+
+      <!-- ===== POST HEADER: title + metadata ===== -->
+      <header class="post-header">
+        <!-- TODO: the visible article title -->
+        <h1>ARTICLE_TITLE_HERE</h1>
+
+        <p class="post-meta">
+          <!-- TODO: edit BOTH the datetime attribute (YYYY-MM-DD) and visible text -->
+          <time datetime="YYYY-MM-DD">Month DD, YYYY</time>
+          &middot;
+          <!-- TODO: category — e.g. News, Opinion, Meme, NLP -->
+          <span class="post-category">CATEGORY_HERE</span>
+        </p>
+      </header>
+
+      <!-- ============================================================
+           POST BODY
+           Keep ONLY what each post needs. Delete the rest.
+
+           - MEME / IMAGE POST  → keep the <figure> block, delete prose.
+           - OPINION / NEWS POST → keep the prose blocks, delete or keep figure.
+
+           Building blocks you can mix freely:
+             <h2>, <h3>   section headings (don't skip levels)
+             <p>          paragraphs
+             <figure>     image / meme with caption
+             <blockquote> a pulled quote
+             <pre><code>  a code snippet (for technical posts)
+             <ul> / <ol>  lists
+           ============================================================ -->
+      <div class="post-body">
+
+        <!-- ----- EXAMPLE: image / meme block ----- -->
+        <!-- alt is REQUIRED: describe the image (or the joke, for a meme) -->
+        <figure>
+          <img src="IMAGE_PATH_HERE" alt="DESCRIBE_THE_IMAGE_HERE" />
+          <figcaption>Optional caption goes here.</figcaption>
+        </figure>
+
+        <!-- ----- EXAMPLE: prose blocks (delete for a pure meme post) ----- -->
+        <p>
+          Opening paragraph. For a quick news post this might be the only 
+          line. For an opinion piece, set up your argument here.
+        </p>
+
+        <h2>A Section Heading</h2>
+        <p>
+          More text. Use h2 for main sections, h3 for sub-points underneath.
+        </p>
+
+        <!-- A pulled quote, e.g. quoting a source or making a point stand out -->
+        <blockquote>
+          A notable quote or a sentence you want to emphasize.
+        </blockquote>
+
+        <!-- A code snippet — only for technical posts. 
+             <pre> preserves spacing/line breaks; <code> marks it as code. -->
+        <pre><code>print("hello world")</code></pre>
+
+      </div>
+
+      <!-- ============================================================
+           SHARE BAR  —  the YouTube-style share row.
+
+           HOW IT WORKS RIGHT NOW (pure HTML):
+           Each fallback link below has this article's URL (and title, where 
+           supported) baked into the href. You replace ARTICLE_URL_HERE and 
+           ARTICLE_TITLE_HERE per article.
+
+           HOW IT WILL WORK LATER (with JS):
+           The data-share-url and data-share-title attributes on this 
+           container are hooks. A few lines of JS will read the page's real 
+           URL automatically and fill every link + power the native Share 
+           button — so you stop hardcoding. Don't remove those attributes.
+
+           Replace spaces in ARTICLE_TITLE_HERE with %20 in the links, OR 
+           let the future JS handle encoding for you.
+           ============================================================ -->
+      <div class="share-bar"
+           data-share-url="ARTICLE_URL_HERE"
+           data-share-title="ARTICLE_TITLE_HERE"
+           aria-label="Share this article">
+
+        <h2 class="share-heading">Share this</h2>
+
+        <!-- ----- NATIVE SHARE BUTTON (OS share sheet, like YouTube mobile) -----
+             This is a <button>, not a link, because JS will trigger the 
+             Web Share API on click. It does NOTHING until you add that JS.
+             It's the ONLY way to reach apps like Instagram that have no 
+             web share URL. type="button" stops it from acting like a 
+             form-submit. -->
+        <button type="button"
+                id="native-share"
+                class="share-button share-native"
+                aria-label="Share via your device">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>Share</span>
+        </button>
+
+        <!-- ----- INDIVIDUAL FALLBACK LINKS -----
+             All open in a new tab. rel="noopener noreferrer" for security. -->
+
+        <!-- X / Twitter: accepts text + url -->
+        <a href="https://twitter.com/intent/tweet?text=ARTICLE_TITLE_HERE&url=ARTICLE_URL_HERE"
+           class="share-button share-x"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Share on X">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+
+        <!-- LinkedIn: accepts url only (pulls title from og: tags) -->
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=ARTICLE_URL_HERE"
+           class="share-button share-linkedin"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Share on LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+
+        <!-- Reddit: accepts url + title -->
+        <a href="https://www.reddit.com/submit?url=ARTICLE_URL_HERE&title=ARTICLE_TITLE_HERE"
+           class="share-button share-reddit"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Share on Reddit">
+          <i class="fa-brands fa-reddit"></i>
+        </a>
+
+        <!-- WhatsApp: accepts text (put title + url together) -->
+        <a href="https://wa.me/?text=ARTICLE_TITLE_HERE%20ARTICLE_URL_HERE"
+           class="share-button share-whatsapp"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Share on WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+        <!-- Telegram: accepts url + text -->
+        <a href="https://t.me/share/url?url=ARTICLE_URL_HERE&text=ARTICLE_TITLE_HERE"
+           class="share-button share-telegram"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Share on Telegram">
+          <i class="fa-brands fa-telegram"></i>
+        </a>
+
+        <!-- Facebook: accepts url ONLY — it ignores custom text and pulls 
+             title/description/image from this article's og: tags. -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u=ARTICLE_URL_HERE"
+           class="share-button share-facebook"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Share on Facebook">
+          <i class="fa-brands fa-facebook"></i>
+        </a>
+
+      </div>
+
+      <!-- Back to the article index. ../ because we're inside /articles/ -->
+      <a href="../articles.html" class="back-link">&larr; Back to all articles</a>
+
+    </article>
+
+  </main>
+
+  <footer>
+    <p>
+      &copy; 2026 P. Antonio Granados &mdash;
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
+      Mestre (VE), Italy
+    </p>
+  </footer>
+
+</body>
+</html>

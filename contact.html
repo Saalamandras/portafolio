@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!--this is the part that link to .css file --> 
+  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="Get in touch with P. Antonio Granados — AI & NLP Engineer based in Venice, Italy. Available for AI/NLP engineering and full-stack roles." />
+
+  <meta name="author" content="P. Antonio Granados" />
+
+  <meta property="og:title" content="Contact | P. Antonio Granados" />
+  <meta property="og:description" content="Get in touch with P. Antonio Granados — AI & NLP Engineer based in Venice, Italy." />
+  <meta property="og:type" content="website" />
+  <!-- TODO: replace yoursite.com with real domain once deployed -->
+  <meta property="og:url" content="https://yoursite.com/contact.html" />
+
+  <link rel="canonical" href="https://yoursite.com/contact.html" />
+
+  <link rel="alternate" hreflang="en" href="https://yoursite.com/contact.html" />
+  <link rel="alternate" hreflang="es" href="https://yoursite.com/contact.html" />
+  <link rel="alternate" hreflang="it" href="https://yoursite.com/contact.html" />
+  <link rel="alternate" hreflang="pt" href="https://yoursite.com/contact.html" />
+
+  <!-- ============================================================
+       FONT AWESOME (icon library) via CDN.
+       This one stylesheet gives you every brand icon below.
+       The "i" tags later (e.g. <i class="fa-brands fa-github">) 
+       render as icons because of this line.
+       NOTE: this loads from a third-party CDN. If you later want a 
+       fully local/GDPR-clean site, swap to inline SVG from simpleicons.org.
+       ============================================================ -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3w=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+
+  <title>Contact | P. Antonio Granados</title>
+</head>
+
+<body class="blueprint-bg">
+
+  <!-- ============================================================
+       HEADER + NAV
+       Identical across all pages. Edit in one place, paste to all.
+       ============================================================ -->
+  <header>
+    <nav aria-label="Main navigation">
+
+      <a href="index.html" class="nav-brand">P. Antonio Granados</a>
+
+      <ul>
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="projects.html" class="nav-link">Projects</a></li>
+        <li><a href="articles.html" class="nav-link">Articles</a></li>
+        <li><a href="contact.html" class="nav-link" aria-current="page">Contact</a></li>
+      </ul>
+
+      <div id="lang-switcher" aria-label="Language switcher">
+        <span>EN</span> | <span>ES</span> | <span>IT</span> | <span>PT</span>
+      </div>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="contact" aria-labelledby="contact-heading">
+      <h1 class="headline" id="contact-heading">Get in Touch</h1>
+      <p class="section-intro body-text">
+        I'm open to AI/NLP engineering, full-stack, and hospitality-tech 
+        roles — remote or in the Veneto region. Reach out via the form 
+        below or connect with me directly.
+      </p>
+
+      <!-- ============================================================
+           CONTACT FORM
+
+           HOW TO MAKE THIS WORK (no backend needed):
+           1. Sign up free at formspree.io OR web3forms.com
+           2. They give you an endpoint URL (Formspree) or access key (Web3Forms).
+           3. Formspree: paste the URL into the form's action="" below.
+              Web3Forms: keep action="https://api.web3forms.com/submit" 
+                         and add a hidden input with your access key (see their docs).
+           4. That's it — submissions arrive in your email. No other changes.
+
+           Until configured, the form displays correctly but submitting 
+           does nothing useful.
+           ============================================================ -->
+      <!-- TODO: replace action="#" with your Formspree endpoint or Web3Forms submit URL -->
+      <form id="contact-form" action="#" method="POST">
+
+        <!-- Each field = a <label> paired with an <input> via matching for/id.
+             This pairing is required for accessibility. -->
+        <div class="form-group">
+          <label for="name">Name</label>
+          <!-- name="name" is the key the form service uses. required = browser validation. -->
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <!-- type="email" makes the browser check the format automatically -->
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <!-- textarea = multi-line input. rows sets the default visible height. -->
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+
+        <!-- type="submit" turns this button into the one that sends the form -->
+        <button type="submit" class="submit-button btn-primary btn-pressable">Send Message</button>
+
+      </form>
+
+      <!-- ============================================================
+           DIRECT CONTACT + SOCIAL LINKS
+
+           Each link wraps a Font Awesome icon. Because the <i> tag has 
+           no text, every link needs an aria-label so screen readers can 
+           announce it.
+
+           External links (social) use target="_blank" to open in a new 
+           tab, plus rel="noopener noreferrer" for security/privacy.
+
+           TODO: when you add or change a social account, update both the 
+           href and the aria-label here.
+           ============================================================ -->
+      <div class="contact-links" aria-label="Direct contact and social media">
+
+        <h2 class="card-title">Or reach me directly</h2>
+
+        <!-- Email link uses mailto: — clicking opens the user's email app.
+             No new tab needed for mailto, so no target="_blank" here. -->
+        <a href="mailto:antonio.granados@protonmail.com"
+           class="contact-icon"
+           aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+
+        <a href="https://github.com/Saalamandras"
+           class="contact-icon"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+
+        <a href="https://www.linkedin.com/in/antonio-granados-v/"
+           class="contact-icon"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+
+        <a href="https://www.reddit.com/user/Saalamandras/"
+           class="contact-icon"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Reddit">
+          <i class="fa-brands fa-reddit"></i>
+        </a>
+
+        <a href="https://x.com/Apocrifos"
+           class="contact-icon"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="X (formerly Twitter)">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      &copy; 2026 P. Antonio Granados &mdash;
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
+      Mestre (VE), Italy
+    </p>
+  </footer>
+
+</body>
+</html>

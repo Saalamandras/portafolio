@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!--this is the part that link to .css file --> 
+  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO description for this page only. Edit when the page's focus changes -->
+  <meta name="description" content="Projects by P. Antonio Granados — AI tools, NLP pipelines, and full-stack applications." />
+
+  <meta name="author" content="P. Antonio Granados" />
+
+  <!-- Open Graph: edit title/description when you want a different preview card on LinkedIn etc. -->
+  <meta property="og:title" content="Projects | P. Antonio Granados" />
+  <meta property="og:description" content="AI tools, NLP pipelines, and full-stack applications by P. Antonio Granados." />
+  <meta property="og:type" content="website" />
+  <!-- TODO: replace yoursite.com with the real domain once deployed -->
+  <meta property="og:url" content="https://yoursite.com/projects.html" />
+
+  <!-- TODO: replace yoursite.com in canonical + hreflang once domain is purchased -->
+  <link rel="canonical" href="https://yoursite.com/projects.html" />
+
+  <link rel="alternate" hreflang="en" href="https://yoursite.com/projects.html" />
+  <link rel="alternate" hreflang="es" href="https://yoursite.com/projects.html" />
+  <link rel="alternate" hreflang="it" href="https://yoursite.com/projects.html" />
+  <link rel="alternate" hreflang="pt" href="https://yoursite.com/projects.html" />
+
+  <title>Projects | P. Antonio Granados</title>
+</head>
+
+<body class="blueprint-bg">
+
+  <!-- ============================================================
+       HEADER + NAV
+       This block is identical across all pages. 
+       If you change a nav link here, change it on every page.
+       (Later, JavaScript can render this from a single source.)
+       ============================================================ -->
+  <header>
+    <nav aria-label="Main navigation">
+
+      <a href="index.html" class="nav-brand">P. Antonio Granados</a>
+
+      <ul>
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <!-- aria-current="page" identifies the current page. Move it when copying this nav to another page -->
+        <li><a href="projects.html" class="nav-link" aria-current="page">Projects</a></li>
+        <li><a href="articles.html" class="nav-link">Articles</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <!-- Static placeholder. JavaScript will wire this up later -->
+      <div id="lang-switcher" aria-label="Language switcher">
+        <span>EN</span> | <span>ES</span> | <span>IT</span> | <span>PT</span>
+      </div>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="projects" aria-labelledby="projects-heading">
+      <h1 class="headline" id="projects-heading">Projects</h1>
+      <p class="section-intro body-text">
+        A selection of AI tools, NLP pipelines, and full-stack applications 
+        I have built. Each project reflects a real problem I set out to solve.
+      </p>
+
+      <!-- ============================================================
+           PROJECT GRID
+
+           HOW TO ADD A NEW PROJECT:
+           1. Copy one <article class="project-card"> block below.
+           2. Paste it inside this .project-grid container.
+           3. Update: <h2>, <p class="project-description">, 
+              the <ul class="tech-stack"> items, and the href on .project-link.
+           4. If the project is not yet live, leave href="#" and add a 
+              TODO comment above the link.
+
+           HOW TO REMOVE A PROJECT:
+           Delete the entire <article>...</article> block.
+
+           HOW TO REORDER:
+           Move the <article> blocks up or down. Order in the HTML 
+           equals visual order on the page.
+           ============================================================ -->
+      <div class="project-grid">
+
+        <!-- ===== PROJECT: Assistente Salute ===== -->
+        <article class="project-card">
+          <h2 class="card-title">Assistente Salute</h2>
+          <p class="project-description body-text">
+            An Italian-language AI triage chatbot that helps users assess symptoms 
+            and find appropriate care. Built with the Anthropic SDK and deployed 
+            on Hugging Face Spaces.
+          </p>
+          <ul class="tech-stack">
+            <li>Python</li>
+            <li>Anthropic SDK</li>
+            <li>Gradio</li>
+            <li>Hugging Face Spaces</li>
+          </ul>
+          <!-- TODO: replace "#" with the live Hugging Face Spaces URL -->
+          <a href="#" class="project-link">View Project</a>
+        </article>
+
+        <!-- ===== PROJECT: Venice Hospitality Pricing Engine ===== -->
+        <article class="project-card">
+          <h2 class="card-title">Venice Hospitality Pricing Engine</h2>
+          <p class="project-description body-text">
+            A dynamic pricing tool for the Mestre hospitality market. Uses real 
+            competitor data, a custom pricing engine, and a Claude-powered 
+            explanation layer to justify pricing decisions in plain language.
+          </p>
+          <ul class="tech-stack">
+            <li>Python</li>
+            <li>Gradio</li>
+            <li>Anthropic SDK</li>
+            <li>Hugging Face Spaces</li>
+          </ul>
+          <!-- TODO: replace "#" with the live demo URL once deployed -->
+          <a href="#" class="project-link">View Project</a>
+        </article>
+
+        <!-- ===== PROJECT: Italian Legal BERT Document Analyser ===== -->
+        <article class="project-card">
+          <h2 class="card-title">Italian Legal BERT Document Analyser</h2>
+          <p class="project-description body-text">
+            A RAG-based Q&amp;A pipeline over Italian legal documents. Users can 
+            query a corpus of legal texts and receive grounded answers with 
+            source references.
+          </p>
+          <ul class="tech-stack">
+            <li>Python</li>
+            <li>FAISS</li>
+            <li>HuggingFace Transformers</li>
+            <li>RAG</li>
+          </ul>
+          <!-- TODO: replace "#" with the GitHub repo or demo URL -->
+          <a href="#" class="project-link">View Project</a>
+        </article>
+
+        <!-- ===== PROJECT: ARXivar Invoice AI Extractor ===== -->
+        <article class="project-card">
+          <h2 class="card-title">ARXivar Invoice AI Extractor</h2>
+          <p class="project-description body-text">
+            A document AI demo built for a technical interview, showcasing 
+            automated invoice data extraction from unstructured documents 
+            using an LLM pipeline.
+          </p>
+          <ul class="tech-stack">
+            <li>Python</li>
+            <li>LLM Pipeline</li>
+            <li>Document AI</li>
+          </ul>
+          <!-- TODO: decide whether to keep this project public; add repo URL if so -->
+          <a href="#" class="project-link">View Project</a>
+        </article>
+
+        <!-- ===== PROJECT: Al Gabbiano Pizzeria ===== -->
+        <article class="project-card">
+          <h2 class="card-title">Al Gabbiano Pizzeria</h2>
+          <p class="project-description body-text">
+            A mobile-first restaurant website built in React. 
+            Deployed on GitHub Pages.
+          </p>
+          <ul class="tech-stack">
+            <li>React</li>
+            <li>CSS</li>
+            <li>GitHub Pages</li>
+          </ul>
+          <!-- TODO: replace "#" with the live GitHub Pages URL -->
+          <a href="#" class="project-link">View Project</a>
+        </article>
+
+        <!-- ===== PROJECT: Saalamandras Downloader ===== -->
+        <article class="project-card">
+          <h2 class="card-title">Saalamandras Downloader</h2>
+          <p class="project-description body-text">
+            A local-first media downloader with a modern web interface. 
+            The frontend communicates with a Python backend that handles 
+            downloads via yt-dlp.
+          </p>
+          <ul class="tech-stack">
+            <li>Next.js 14</li>
+            <li>TypeScript</li>
+            <li>FastAPI</li>
+            <li>yt-dlp</li>
+          </ul>
+          <!-- TODO: replace "#" with the GitHub repo URL when ready -->
+          <a href="#" class="project-link">View Project</a>
+        </article>
+
+        <!-- ============================================================
+             TEMPLATE: copy-paste this block to add a new project.
+             Remove the surrounding comment markers when you do.
+
+             <article class="project-card">
+               <h2>Project Title</h2>
+               <p class="project-description">
+                 One or two sentences describing what the project does 
+                 and why it matters.
+               </p>
+               <ul class="tech-stack">
+                 <li>Tech 1</li>
+                 <li>Tech 2</li>
+                 <li>Tech 3</li>
+               </ul>
+               <a href="#" class="project-link">View Project</a>
+             </article>
+             ============================================================ -->
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       Identical across all pages. Update copyright year in January.
+       ============================================================ -->
+  <footer>
+    <p>
+      &copy; 2026 P. Antonio Granados &mdash;
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
+      Mestre (VE), Italy
+    </p>
+  </footer>
+
+</body>
+</html>
