@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-  <!--this is the part that link to .css file --> 
-  <link rel="stylesheet" href="css/style.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -40,9 +38,11 @@
   <!-- Font Awesome — needed for the share + social icons below -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3w=="
-        crossorigin="anonymous"
         referrerpolicy="no-referrer" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
 
   <!-- TODO: the browser-tab title for THIS article -->
   <title>ARTICLE_TITLE_HERE | P. Antonio Granados</title>
@@ -63,15 +63,18 @@
       <a href="../index.html" class="nav-brand">P. Antonio Granados</a>
 
       <ul>
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="../projects.html">Projects</a></li>
+        <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="../projects.html" data-i18n="nav_projects">Projects</a></li>
         <!-- The article belongs to the Articles section, so mark it current -->
-        <li><a href="../articles.html" aria-current="page">Articles</a></li>
-        <li><a href="../contact.html">Contact</a></li>
+        <li><a href="../articles.html" aria-current="page" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="../contact.html" data-i18n="nav_contact">Contact</a></li>
       </ul>
 
-      <div id="lang-switcher" aria-label="Language switcher">
-        <span>EN</span> | <span>ES</span> | <span>IT</span> | <span>PT</span>
+      <div id="lang-switcher" role="group" aria-label="Language switcher">
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        <button type="button" class="lang-btn" data-lang="it" aria-pressed="false">IT</button>
+        <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
       </div>
 
     </nav>
@@ -145,19 +148,17 @@
       <!-- ============================================================
            SHARE BAR  —  the YouTube-style share row.
 
-           HOW IT WORKS RIGHT NOW (pure HTML):
-           Each fallback link below has this article's URL (and title, where 
-           supported) baked into the href. You replace ARTICLE_URL_HERE and 
-           ARTICLE_TITLE_HERE per article.
+           HOW IT WORKS NOW (with js/share.js):
+           On load, share.js reads this page's real URL (window.location.href)
+           and title (document.title), fills every fallback link below, and
+           wires the native Share button to the Web Share API — with a
+           "copy link" fallback on browsers that don't support it. You only
+           need to keep the <title> and data-share-* attributes accurate;
+           everything else is automatic.
 
-           HOW IT WILL WORK LATER (with JS):
-           The data-share-url and data-share-title attributes on this 
-           container are hooks. A few lines of JS will read the page's real 
-           URL automatically and fill every link + power the native Share 
-           button — so you stop hardcoding. Don't remove those attributes.
-
-           Replace spaces in ARTICLE_TITLE_HERE with %20 in the links, OR 
-           let the future JS handle encoding for you.
+           If you'd rather hardcode a specific canonical URL/title instead of
+           relying on the live page values, set data-share-url / 
+           data-share-title below and share.js will use those instead.
            ============================================================ -->
       <div class="share-bar"
            data-share-url="ARTICLE_URL_HERE"
@@ -167,11 +168,10 @@
         <h2 class="share-heading">Share this</h2>
 
         <!-- ----- NATIVE SHARE BUTTON (OS share sheet, like YouTube mobile) -----
-             This is a <button>, not a link, because JS will trigger the 
-             Web Share API on click. It does NOTHING until you add that JS.
-             It's the ONLY way to reach apps like Instagram that have no 
-             web share URL. type="button" stops it from acting like a 
-             form-submit. -->
+             This is a <button>, not a link — js/share.js triggers the 
+             Web Share API on click (or copies the link on unsupported 
+             browsers, like Instagram, which has no web share URL). 
+             type="button" stops it from acting like a form-submit. -->
         <button type="button"
                 id="native-share"
                 class="share-button share-native"
@@ -181,10 +181,11 @@
         </button>
 
         <!-- ----- INDIVIDUAL FALLBACK LINKS -----
+             hrefs are filled in automatically by js/share.js on load.
              All open in a new tab. rel="noopener noreferrer" for security. -->
 
         <!-- X / Twitter: accepts text + url -->
-        <a href="https://twitter.com/intent/tweet?text=ARTICLE_TITLE_HERE&url=ARTICLE_URL_HERE"
+        <a href="#"
            class="share-button share-x"
            target="_blank" rel="noopener noreferrer"
            aria-label="Share on X">
@@ -192,7 +193,7 @@
         </a>
 
         <!-- LinkedIn: accepts url only (pulls title from og: tags) -->
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url=ARTICLE_URL_HERE"
+        <a href="#"
            class="share-button share-linkedin"
            target="_blank" rel="noopener noreferrer"
            aria-label="Share on LinkedIn">
@@ -200,7 +201,7 @@
         </a>
 
         <!-- Reddit: accepts url + title -->
-        <a href="https://www.reddit.com/submit?url=ARTICLE_URL_HERE&title=ARTICLE_TITLE_HERE"
+        <a href="#"
            class="share-button share-reddit"
            target="_blank" rel="noopener noreferrer"
            aria-label="Share on Reddit">
@@ -208,7 +209,7 @@
         </a>
 
         <!-- WhatsApp: accepts text (put title + url together) -->
-        <a href="https://wa.me/?text=ARTICLE_TITLE_HERE%20ARTICLE_URL_HERE"
+        <a href="#"
            class="share-button share-whatsapp"
            target="_blank" rel="noopener noreferrer"
            aria-label="Share on WhatsApp">
@@ -216,7 +217,7 @@
         </a>
 
         <!-- Telegram: accepts url + text -->
-        <a href="https://t.me/share/url?url=ARTICLE_URL_HERE&text=ARTICLE_TITLE_HERE"
+        <a href="#"
            class="share-button share-telegram"
            target="_blank" rel="noopener noreferrer"
            aria-label="Share on Telegram">
@@ -225,7 +226,7 @@
 
         <!-- Facebook: accepts url ONLY — it ignores custom text and pulls 
              title/description/image from this article's og: tags. -->
-        <a href="https://www.facebook.com/sharer/sharer.php?u=ARTICLE_URL_HERE"
+        <a href="#"
            class="share-button share-facebook"
            target="_blank" rel="noopener noreferrer"
            aria-label="Share on Facebook">
@@ -245,9 +246,12 @@
     <p>
       &copy; 2026 P. Antonio Granados &mdash;
       <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
-      Mestre (VE), Italy
+      <span data-i18n="footer_location">Mestre (VE), Italy</span>
     </p>
   </footer>
+
+  <script defer src="../js/i18n.js"></script>
+  <script defer src="../js/share.js"></script>
 
 </body>
 </html>

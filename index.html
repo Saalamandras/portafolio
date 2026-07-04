@@ -66,19 +66,16 @@
   <!-- MAIN contains the content unique to this page. Only one <main> per page -->
   <main>
 
-    <!-- HERO: the first thing a visitor sees. Your headline and value proposition -->
-    <section id="hero" aria-labelledby="hero-heading">
-      <h1 class="headline" id="hero-heading">AI &amp; NLP Engineer</h1>
-      <p class="body-text hero-subtitle">Prompt Engineer · Computational Linguist · Multilingual AI Developer</p>
-      <p class="body-text hero-location">Based in Venice, Italy</p>
-      <a href="projects.html" class="cta-button btn-primary btn-pressable">See My Projects</a>
-    </section>
-
-    <!-- ABOUT: your professional summary, taken directly from your CV -->
-    <section id="about" aria-labelledby="about-heading">
-      <h2 id="about-heading">About Me</h2>      
+    <!-- HERO: the first thing a visitor sees. Headline + avatar, side by side -->
+    <section id="hero" aria-labelledby="hero-heading" style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:40px;align-items:center;">
+      <div>
+        <p class="eyebrow" style="margin:0 0 18px;">Prompt Engineer · Computational Linguist · Multilingual AI Developer</p>
+        <h1 class="headline" id="hero-heading">AI &amp; NLP Engineer</h1>
+        <p class="body-text hero-location">Based in Venice, Italy</p>
+        <a href="projects.html" class="cta-button btn-primary btn-pressable">See My Projects</a>
+      </div>
       <!-- Profile Avatar with HUD Viewfinder Corners -->
-      <div class="viewfinder-frame" style="width: 200px; margin: 24px 0 32px 0;">
+      <div class="viewfinder-frame" style="width: 200px; justify-self: end;">
         <div class="corner tl"></div>
         <div class="corner tr"></div>
         <div class="corner bl"></div>
@@ -87,7 +84,13 @@
         <!-- TODO: Replace with actual avatar image -->
         <img src="images/Profile_Picture_2026.png" alt="P. Antonio Granados" />
       </div>
-            <p class="body-text">
+    </section>
+
+    <!-- ABOUT: your professional summary, taken directly from your CV -->
+    <section id="about" aria-labelledby="about-heading">
+      <h2 class="sr-only" id="about-heading">About Me</h2>
+      <div class="section-divider"><span class="section-num">01</span><span class="section-label">ABOUT</span><div class="rule"></div></div>
+      <p class="body-text">
         Prompt Engineer and NLP specialist with hands-on experience at TELUS International and Appen, 
         combined with an MSc in Computational Linguistics (LLM track) at Ca' Foscari University, Venice. 
         Fluent in four languages and skilled across the full AI/NLP stack — from model fine-tuning and 
@@ -102,7 +105,8 @@
 
     <!-- SKILLS: your three competency columns from the CV -->
     <section id="skills" aria-labelledby="skills-heading">
-      <h2 class="card-title" id="skills-heading">Core Competencies</h2>
+      <h2 class="card-title sr-only" id="skills-heading">Core Competencies</h2>
+      <div class="section-divider"><span class="section-num">02</span><span class="section-label">SKILLS</span><div class="rule"></div></div>
 
       <!-- Each column is a <div> with a class. CSS will turn these into columns later -->
       <div class="skills-grid">
@@ -149,6 +153,7 @@
 
     <!-- CTA SECTION: nudge the visitor toward your projects -->
     <section id="cta" aria-labelledby="cta-heading">
+      <div class="section-divider"><span class="section-num">03</span><span class="section-label">NEXT STEPS</span><div class="rule"></div></div>
       <h2 class="card-title" id="cta-heading">Want to see what I build?</h2>
       <p class="body-text">I work on AI systems, NLP tools, and multilingual applications. Take a look at my projects.</p>
       <a href="projects.html" class="cta-button btn-primary btn-pressable">View Projects</a>
