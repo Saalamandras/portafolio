@@ -74,7 +74,7 @@
   <main>
 
     <!-- HERO: the first thing a visitor sees. Headline + avatar, side by side -->
-    <section id="hero" aria-labelledby="hero-heading" style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:40px;align-items:center;">
+    <section id="hero" aria-labelledby="hero-heading" data-animate style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:40px;align-items:center;">
       <div>
         <p class="eyebrow" style="margin:0 0 18px;" data-i18n="hero_subtitle">Prompt Engineer · Computational Linguist · Multilingual AI Developer</p>
         <h1 class="headline" id="hero-heading" data-i18n="hero_title">AI &amp; NLP Engineer</h1>
@@ -97,13 +97,13 @@
     <section id="about" aria-labelledby="about-heading">
       <h2 class="sr-only" id="about-heading">About Me</h2>
       <div class="section-divider"><span class="section-num">01</span><span class="section-label">ABOUT</span><div class="rule"></div></div>
-      <p class="body-text" data-i18n="about_p1">
+      <p class="body-text" data-animate data-i18n="about_p1">
         Prompt Engineer and NLP specialist with hands-on experience at TELUS International and Appen,
         combined with an MSc in Computational Linguistics (LLM track) at Ca' Foscari University, Venice.
         Fluent in four languages and skilled across the full AI/NLP stack — from model fine-tuning and
         prompt optimization to multilingual content strategy and LLM deployment.
       </p>
-      <p class="body-text" data-i18n="about_p2">
+      <p class="body-text" data-animate data-i18n="about_p2">
         I bring a rare combination of technical depth, linguistic expertise, instructional design,
         and domain knowledge in hospitality technology. Equally comfortable building and evaluating
         AI systems as writing the documentation, curriculum, or content that surrounds them.
@@ -118,7 +118,7 @@
       <!-- Each column is a <div> with a class. CSS will turn these into columns later -->
       <div class="skills-grid">
 
-        <div class="skill-category">
+        <div class="skill-category" data-animate="delay-1">
           <h3 class="card-title" data-i18n="skill_cat1">AI &amp; NLP Engineering</h3>
           <ul>
             <li>Prompt Engineering &amp; Optimization</li>
@@ -131,7 +131,7 @@
           </ul>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category" data-animate="delay-2">
           <h3 class="card-title" data-i18n="skill_cat2">Language &amp; Content</h3>
           <ul>
             <li>Multilingual NLP (EN / ES / IT / PT)</li>
@@ -143,7 +143,7 @@
           </ul>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category" data-animate="delay-3">
           <h3 class="card-title" data-i18n="skill_cat3">Domain &amp; Tools</h3>
           <ul>
             <li>Oracle OPERA PMS / Cloud</li>
@@ -159,7 +159,7 @@
     </section>
 
     <!-- CTA SECTION: nudge the visitor toward your projects -->
-    <section id="cta" aria-labelledby="cta-heading">
+    <section id="cta" aria-labelledby="cta-heading" data-animate>
       <div class="section-divider"><span class="section-num">03</span><span class="section-label">NEXT STEPS</span><div class="rule"></div></div>
       <h2 class="card-title" id="cta-heading" data-i18n="cta_heading">Want to see what I build?</h2>
       <p class="body-text" data-i18n="cta_p">I work on AI systems, NLP tools, and multilingual applications. Take a look at my projects.</p>
@@ -182,5 +182,7 @@
   <script src="js/i18n.js"></script>
   <!-- theme.js applies saved dark/light preference and wires up the toggle button -->
   <script src="js/theme.js"></script>
+  <!-- animations.js watches [data-animate] elements and fades them in on scroll -->
+  <script src="js/animations.js"></script>
 </body>
 </html>

@@ -90,6 +90,38 @@ body {
 }
 
 /* ============================================================
+   SCROLL ANIMATIONS
+   Elements with [data-animate] start hidden. When animations.js
+   adds the "visible" class, the transition plays.
+   data-animate="delay-1" / "delay-2" / "delay-3" staggers cards
+   so they don't all pop in at the same time.
+   ============================================================ */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+[data-animate].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered delays for grids (skill cards, project cards) */
+[data-animate="delay-1"] { transition-delay: 0.1s; }
+[data-animate="delay-2"] { transition-delay: 0.2s; }
+[data-animate="delay-3"] { transition-delay: 0.3s; }
+
+/* Respect user's reduced-motion preference — skip animation entirely */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
    BOX MODEL: Set border-box globally for predictable sizing
    ============================================================ */
 *,
