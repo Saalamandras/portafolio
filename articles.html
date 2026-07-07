@@ -41,14 +41,17 @@
       <a href="index.html" class="nav-brand">P. Antonio Granados</a>
 
       <ul>
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="projects.html" class="nav-link">Projects</a></li>
-        <li><a href="articles.html" class="nav-link" aria-current="page">Articles</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+        <li><a href="projects.html" class="nav-link" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="articles.html" class="nav-link" aria-current="page" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
       </ul>
 
       <div id="lang-switcher" aria-label="Language switcher">
-        <span>EN</span> | <span>ES</span> | <span>IT</span> | <span>PT</span>
+        <button class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        <button class="lang-btn" data-lang="it" aria-pressed="false">IT</button>
+        <button class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
       </div>
 
     </nav>
@@ -57,9 +60,9 @@
   <main>
 
     <section id="articles" aria-labelledby="articles-heading">
-      <h1 class="headline" id="articles-heading">Articles</h1>
-      <p class="section-intro body-text">
-        Writing on AI, NLP, prompt engineering, and multilingual language 
+      <h1 class="headline" id="articles-heading" data-i18n="articles_heading">Articles</h1>
+      <p class="section-intro body-text" data-i18n="articles_intro">
+        Writing on AI, NLP, prompt engineering, and multilingual language
         technology — what I am learning, building, and thinking about.
       </p>
 
@@ -67,3 +70,18 @@
            ARTICLE LIST
 
            PUBLISHING WORKFLOW
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      &copy; 2026 P. Antonio Granados &mdash;
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
+      Mestre (VE), Italy
+    </p>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+</body>
+</html>

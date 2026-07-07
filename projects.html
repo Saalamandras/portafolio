@@ -46,16 +46,18 @@
       <a href="index.html" class="nav-brand">P. Antonio Granados</a>
 
       <ul>
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <!-- aria-current="page" identifies the current page. Move it when copying this nav to another page -->
-        <li><a href="projects.html" class="nav-link" aria-current="page">Projects</a></li>
-        <li><a href="articles.html" class="nav-link">Articles</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+        <li><a href="projects.html" class="nav-link" aria-current="page" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="articles.html" class="nav-link" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
       </ul>
 
       <!-- Static placeholder. JavaScript will wire this up later -->
       <div id="lang-switcher" aria-label="Language switcher">
-        <span>EN</span> | <span>ES</span> | <span>IT</span> | <span>PT</span>
+        <button class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        <button class="lang-btn" data-lang="it" aria-pressed="false">IT</button>
+        <button class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
       </div>
 
     </nav>
@@ -64,9 +66,9 @@
   <main>
 
     <section id="projects" aria-labelledby="projects-heading">
-      <h1 class="headline" id="projects-heading">Projects</h1>
-      <p class="section-intro body-text">
-        A selection of AI tools, NLP pipelines, and full-stack applications 
+      <h1 class="headline" id="projects-heading" data-i18n="projects_heading">Projects</h1>
+      <p class="section-intro body-text" data-i18n="projects_intro">
+        A selection of AI tools, NLP pipelines, and full-stack applications
         I have built. Each project reflects a real problem I set out to solve.
       </p>
 
@@ -217,5 +219,6 @@
     </p>
   </footer>
 
+  <script src="js/i18n.js"></script>
 </body>
 </html>

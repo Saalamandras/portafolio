@@ -48,15 +48,19 @@
 
       <!-- Navigation links. href values are the actual filenames in your folder -->
       <ul>
-        <li><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
-        <li><a href="projects.html" class="nav-link">Projects</a></li>
-        <li><a href="articles.html" class="nav-link">Articles</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="index.html" class="nav-link" aria-current="page" data-i18n="nav_home">Home</a></li>
+        <li><a href="projects.html" class="nav-link" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="articles.html" class="nav-link" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
       </ul>
 
-      <!-- Language switcher — static for now. JavaScript will make this functional later -->
+      <!-- Language switcher — each button carries data-lang so i18n.js can read it.
+           aria-pressed is set to "true"/"false" by the JS to show which is active. -->
       <div id="lang-switcher" aria-label="Language switcher">
-        <span>EN</span> | <span>ES</span> | <span>IT</span> | <span>PT</span>
+        <button class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        <button class="lang-btn" data-lang="it" aria-pressed="false">IT</button>
+        <button class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
       </div>
 
     </nav>
@@ -69,10 +73,10 @@
     <!-- HERO: the first thing a visitor sees. Headline + avatar, side by side -->
     <section id="hero" aria-labelledby="hero-heading" style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:40px;align-items:center;">
       <div>
-        <p class="eyebrow" style="margin:0 0 18px;">Prompt Engineer · Computational Linguist · Multilingual AI Developer</p>
-        <h1 class="headline" id="hero-heading">AI &amp; NLP Engineer</h1>
-        <p class="body-text hero-location">Based in Venice, Italy</p>
-        <a href="projects.html" class="cta-button btn-primary btn-pressable">See My Projects</a>
+        <p class="eyebrow" style="margin:0 0 18px;" data-i18n="hero_subtitle">Prompt Engineer · Computational Linguist · Multilingual AI Developer</p>
+        <h1 class="headline" id="hero-heading" data-i18n="hero_title">AI &amp; NLP Engineer</h1>
+        <p class="body-text hero-location" data-i18n="hero_location">Based in Venice, Italy</p>
+        <a href="projects.html" class="cta-button btn-primary btn-pressable" data-i18n="hero_cta">See My Projects</a>
       </div>
       <!-- Profile Avatar with HUD Viewfinder Corners -->
       <div class="viewfinder-frame" style="width: 200px; justify-self: end;">
@@ -90,15 +94,15 @@
     <section id="about" aria-labelledby="about-heading">
       <h2 class="sr-only" id="about-heading">About Me</h2>
       <div class="section-divider"><span class="section-num">01</span><span class="section-label">ABOUT</span><div class="rule"></div></div>
-      <p class="body-text">
-        Prompt Engineer and NLP specialist with hands-on experience at TELUS International and Appen, 
-        combined with an MSc in Computational Linguistics (LLM track) at Ca' Foscari University, Venice. 
-        Fluent in four languages and skilled across the full AI/NLP stack — from model fine-tuning and 
+      <p class="body-text" data-i18n="about_p1">
+        Prompt Engineer and NLP specialist with hands-on experience at TELUS International and Appen,
+        combined with an MSc in Computational Linguistics (LLM track) at Ca' Foscari University, Venice.
+        Fluent in four languages and skilled across the full AI/NLP stack — from model fine-tuning and
         prompt optimization to multilingual content strategy and LLM deployment.
       </p>
-      <p class="body-text">
-        I bring a rare combination of technical depth, linguistic expertise, instructional design, 
-        and domain knowledge in hospitality technology. Equally comfortable building and evaluating 
+      <p class="body-text" data-i18n="about_p2">
+        I bring a rare combination of technical depth, linguistic expertise, instructional design,
+        and domain knowledge in hospitality technology. Equally comfortable building and evaluating
         AI systems as writing the documentation, curriculum, or content that surrounds them.
       </p>
     </section>
@@ -112,7 +116,7 @@
       <div class="skills-grid">
 
         <div class="skill-category">
-          <h3 class="card-title">AI &amp; NLP Engineering</h3>
+          <h3 class="card-title" data-i18n="skill_cat1">AI &amp; NLP Engineering</h3>
           <ul>
             <li>Prompt Engineering &amp; Optimization</li>
             <li>LLM Fine-tuning (LoRA / RLHF)</li>
@@ -125,7 +129,7 @@
         </div>
 
         <div class="skill-category">
-          <h3 class="card-title">Language &amp; Content</h3>
+          <h3 class="card-title" data-i18n="skill_cat2">Language &amp; Content</h3>
           <ul>
             <li>Multilingual NLP (EN / ES / IT / PT)</li>
             <li>UX Writing &amp; Copywriting</li>
@@ -137,7 +141,7 @@
         </div>
 
         <div class="skill-category">
-          <h3 class="card-title">Domain &amp; Tools</h3>
+          <h3 class="card-title" data-i18n="skill_cat3">Domain &amp; Tools</h3>
           <ul>
             <li>Oracle OPERA PMS / Cloud</li>
             <li>Hospitality IT Operations</li>
@@ -154,9 +158,9 @@
     <!-- CTA SECTION: nudge the visitor toward your projects -->
     <section id="cta" aria-labelledby="cta-heading">
       <div class="section-divider"><span class="section-num">03</span><span class="section-label">NEXT STEPS</span><div class="rule"></div></div>
-      <h2 class="card-title" id="cta-heading">Want to see what I build?</h2>
-      <p class="body-text">I work on AI systems, NLP tools, and multilingual applications. Take a look at my projects.</p>
-      <a href="projects.html" class="cta-button btn-primary btn-pressable">View Projects</a>
+      <h2 class="card-title" id="cta-heading" data-i18n="cta_heading">Want to see what I build?</h2>
+      <p class="body-text" data-i18n="cta_p">I work on AI systems, NLP tools, and multilingual applications. Take a look at my projects.</p>
+      <a href="projects.html" class="cta-button btn-primary btn-pressable" data-i18n="cta_button">View Projects</a>
     </section>
 
   </main>
@@ -170,5 +174,8 @@
     </p>
   </footer>
 
+  <!-- i18n.js reads all [data-i18n] elements and swaps text on language change.
+       Placed just before </body> so the DOM is fully loaded when it runs. -->
+  <script src="js/i18n.js"></script>
 </body>
 </html>
