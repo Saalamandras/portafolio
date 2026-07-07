@@ -63,6 +63,9 @@
         <button class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
       </div>
 
+      <!-- Theme toggle — label is set dynamically by theme.js on load -->
+      <button class="theme-toggle" aria-label="Switch to light mode">[ LIGHT ]</button>
+
     </nav>
 
   </header>
@@ -177,5 +180,7 @@
   <!-- i18n.js reads all [data-i18n] elements and swaps text on language change.
        Placed just before </body> so the DOM is fully loaded when it runs. -->
   <script src="js/i18n.js"></script>
+  <!-- theme.js applies saved dark/light preference and wires up the toggle button -->
+  <script src="js/theme.js"></script>
 </body>
 </html>

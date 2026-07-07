@@ -16,6 +16,31 @@
   --grid-line:     rgba(232, 163, 61, .08);
 }
 
+/* ------------------------------------------------------------------
+   LIGHT MODE — applied when <body class="light-mode"> is set by JS.
+   Only the variables that need to change are listed here; everything
+   else inherits from :root above.
+   ------------------------------------------------------------------ */
+body.light-mode {
+  --bg:            rgba(245, 243, 235, 1);   /* warm off-white parchment */
+  --surface:       rgba(232, 229, 218, 1);   /* slightly darker card bg  */
+  --surface-alt:   rgba(220, 217, 204, 1);
+
+  --text-headline: rgba(18, 20, 28, 1);      /* near-black */
+  --text-body:     rgba(55, 60, 75, 1);
+  --text-muted:    rgba(100, 107, 122, 1);
+  --text-nav:      rgba(80, 88, 105, 1);
+
+  --border-accent: rgba(180, 120, 30, .4);
+  --border-faint:  rgba(180, 120, 30, .3);
+  --grid-line:     rgba(180, 120, 30, .1);
+}
+
+/* Smooth transition when the theme flips — affects background and text */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 /* Visually hide text while keeping it for screen readers (used to avoid
    duplicating a section's visible label when a numbered divider already shows it) */
 .sr-only {
@@ -274,6 +299,24 @@ nav a[aria-current="page"] {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* Theme toggle button — styled to match the retro nav aesthetic */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-accent);
+  padding: 3px 7px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: .08em;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* ============================================================
