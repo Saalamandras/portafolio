@@ -77,7 +77,7 @@
     <section id="hero" aria-labelledby="hero-heading" data-animate style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:40px;align-items:center;">
       <div>
         <p class="eyebrow" style="margin:0 0 18px;" data-i18n="hero_subtitle">Prompt Engineer · Computational Linguist · Multilingual AI Developer</p>
-        <h1 class="headline" id="hero-heading" data-i18n="hero_title">AI &amp; NLP Engineer</h1>
+        <h1 class="headline" id="hero-heading" data-i18n="hero_title" data-typewriter>AI &amp; NLP Engineer</h1>
         <p class="body-text hero-location" data-i18n="hero_location">Based in Venice, Italy</p>
         <a href="projects.html" class="cta-button btn-primary btn-pressable" data-i18n="hero_cta">See My Projects</a>
       </div>
@@ -184,5 +184,8 @@
   <script src="js/theme.js"></script>
   <!-- animations.js watches [data-animate] elements and fades them in on scroll -->
   <script src="js/animations.js"></script>
+  <!-- typewriter.js runs the typing effect on [data-typewriter] elements.
+       Must come after i18n.js since it listens for the i18n:applied event. -->
+  <script src="js/typewriter.js"></script>
 </body>
 </html>

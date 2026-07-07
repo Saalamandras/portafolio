@@ -90,6 +90,34 @@ body {
 }
 
 /* ============================================================
+   TYPEWRITER EFFECT
+   The blinking cursor is a pseudo-element so it never appears
+   in the actual text content (good for screen readers).
+   .typing  = cursor blinking while text is being typed
+   .typed   = cursor stops blinking once typing is complete
+   ============================================================ */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.typing::after,
+.typed::after {
+  content: "_";
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.typing::after {
+  animation: blink 0.7s step-end infinite;
+}
+
+/* Respect reduced-motion — skip the blink */
+@media (prefers-reduced-motion: reduce) {
+  .typing::after { animation: none; }
+}
+
+/* ============================================================
    SCROLL ANIMATIONS
    Elements with [data-animate] start hidden. When animations.js
    adds the "visible" class, the transition plays.

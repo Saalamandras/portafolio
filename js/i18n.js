@@ -183,6 +183,9 @@
       var isActive = btn.getAttribute("data-lang") === lang;
       btn.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
+
+    /* Notify other scripts (e.g. typewriter.js) that translations have been applied */
+    document.dispatchEvent(new CustomEvent("i18n:applied", { detail: { lang: lang } }));
   }
 
   document.addEventListener("DOMContentLoaded", function () {
