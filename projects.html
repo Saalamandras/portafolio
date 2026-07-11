@@ -97,12 +97,12 @@
         <!-- ===== PROJECT: Assistente Salute ===== -->
         <article class="project-card" data-animate="delay-1">
           <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
-            <h2 class="card-title">Assistente Salute</h2>
+            <h2 class="card-title" data-i18n="proj_salute_title">Assistente Salute</h2>
             <span class="tech-line">Python · Anthropic SDK · Gradio · Hugging Face Spaces</span>
           </div>
-          <p class="project-description body-text">
-            An Italian-language AI triage chatbot that helps users assess symptoms 
-            and find appropriate care. Built with the Anthropic SDK and deployed 
+          <p class="project-description body-text" data-i18n="proj_salute_desc">
+            An Italian-language AI triage chatbot that helps users assess symptoms
+            and find appropriate care. Built with the Anthropic SDK and deployed
             on Hugging Face Spaces.
           </p>
           <a href="https://github.com/Saalamandras/assistente-salute" class="project-link" target="_blank" rel="noopener noreferrer" data-i18n="project_link">View Project →</a>
@@ -111,10 +111,10 @@
         <!-- ===== PROJECT: Hotel Breakfast Booking App ===== -->
         <article class="project-card" data-animate="delay-2">
           <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
-            <h2 class="card-title">Hotel Breakfast Booking App</h2>
+            <h2 class="card-title" data-i18n="proj_hotel_title">Hotel Breakfast Booking App</h2>
             <span class="tech-line">React · Supabase · Vercel</span>
           </div>
-          <p class="project-description body-text">
+          <p class="project-description body-text" data-i18n="proj_hotel_desc">
             A full-stack web app for managing hotel breakfast reservations.
             Guests book time slots with real-time capacity tracking (max 24 per slot),
             conflict detection, and persistent cloud storage via Supabase.
@@ -125,10 +125,10 @@
         <!-- ===== PROJECT: Invoice AI Extractor ===== -->
         <article class="project-card" data-animate="delay-1">
           <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
-            <h2 class="card-title">Invoice AI Extractor</h2>
+            <h2 class="card-title" data-i18n="proj_invoice_title">Invoice AI Extractor</h2>
             <span class="tech-line">Python · LLM Pipeline · Document AI</span>
           </div>
-          <p class="project-description body-text">
+          <p class="project-description body-text" data-i18n="proj_invoice_desc">
             A document AI demo built for a technical interview, showcasing
             automated invoice data extraction from unstructured documents
             using an LLM pipeline.
@@ -139,11 +139,11 @@
         <!-- ===== PROJECT: Al Gabbiano Pizzeria ===== -->
         <article class="project-card" data-animate="delay-2">
           <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
-            <h2 class="card-title">Al Gabbiano Pizzeria</h2>
+            <h2 class="card-title" data-i18n="proj_gabbiano_title">Al Gabbiano Pizzeria</h2>
             <span class="tech-line">React · CSS · GitHub Pages</span>
           </div>
-          <p class="project-description body-text">
-            A mobile-first restaurant website built in React. 
+          <p class="project-description body-text" data-i18n="proj_gabbiano_desc">
+            A mobile-first restaurant website built in React.
             Deployed on GitHub Pages.
           </p>
           <a href="https://github.com/Saalamandras/Al_Gabbiano_Pizzeria" class="project-link" target="_blank" rel="noopener noreferrer" data-i18n="project_link">View Project →</a>
@@ -152,10 +152,10 @@
         <!-- ===== PROJECT: VFU Manager ===== -->
         <article class="project-card" data-animate="delay-3">
           <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
-            <h2 class="card-title">VFU Manager</h2>
+            <h2 class="card-title" data-i18n="proj_vfu_title">VFU Manager</h2>
             <span class="tech-line">Python · Odoo 17 · QWeb · Anthropic API</span>
           </div>
-          <p class="project-description body-text">
+          <p class="project-description body-text" data-i18n="proj_vfu_desc">
             A vertical Odoo module for authorised end-of-life vehicle treatment
             facilities. Models the full intake-to-closure flow with a depollution
             gate, automatic CDR numbering, QWeb PDF certificates, and an optional
@@ -204,5 +204,59 @@
   <script src="js/theme.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/typewriter.js"></script>
+
+  <script>
+    window.i18nRegister({
+      en: {
+        proj_salute_title: "Assistente Salute",
+        proj_salute_desc: "An Italian-language AI triage chatbot that helps users assess symptoms and find appropriate care. Built with the Anthropic SDK and deployed on Hugging Face Spaces.",
+        proj_hotel_title: "Hotel Breakfast Booking App",
+        proj_hotel_desc: "A full-stack web app for managing hotel breakfast reservations. Guests book time slots with real-time capacity tracking (max 24 per slot), conflict detection, and persistent cloud storage via Supabase.",
+        proj_invoice_title: "Invoice AI Extractor",
+        proj_invoice_desc: "A document AI demo built for a technical interview, showcasing automated invoice data extraction from unstructured documents using an LLM pipeline.",
+        proj_gabbiano_title: "Al Gabbiano Pizzeria",
+        proj_gabbiano_desc: "A mobile-first restaurant website built in React. Deployed on GitHub Pages.",
+        proj_vfu_title: "VFU Manager",
+        proj_vfu_desc: "A vertical Odoo module for authorised end-of-life vehicle treatment facilities. Models the full intake-to-closure flow with a depollution gate, automatic CDR numbering, QWeb PDF certificates, and an optional AI compliance assistant."
+      },
+      es: {
+        proj_salute_title: "Assistente Salute",
+        proj_salute_desc: "Un chatbot de triaje médico en italiano que ayuda a los usuarios a evaluar síntomas y encontrar la atención adecuada. Construido con el SDK de Anthropic y desplegado en Hugging Face Spaces.",
+        proj_hotel_title: "App de Reserva de Desayuno",
+        proj_hotel_desc: "Una aplicación web full-stack para gestionar reservas de desayuno en hoteles. Los huéspedes reservan franjas horarias con seguimiento de capacidad en tiempo real (máx. 24 por franja), detección de conflictos y almacenamiento persistente en la nube vía Supabase.",
+        proj_invoice_title: "Extractor IA de Facturas",
+        proj_invoice_desc: "Una demo de Document AI construida para una entrevista técnica, mostrando la extracción automatizada de datos de facturas a partir de documentos no estructurados mediante un pipeline de LLM.",
+        proj_gabbiano_title: "Al Gabbiano Pizzeria",
+        proj_gabbiano_desc: "Un sitio web de restaurante mobile-first construido en React. Desplegado en GitHub Pages.",
+        proj_vfu_title: "VFU Manager",
+        proj_vfu_desc: "Un módulo vertical de Odoo para centros autorizados de tratamiento de vehículos fuera de uso. Modela el flujo completo desde la recepción hasta el cierre con compuerta de descontaminación, numeración automática de CDR, certificados PDF en QWeb y un asistente de cumplimiento con IA opcional."
+      },
+      it: {
+        proj_salute_title: "Assistente Salute",
+        proj_salute_desc: "Un chatbot di triage medico in italiano che aiuta gli utenti a valutare i sintomi e trovare l'assistenza appropriata. Costruito con l'SDK di Anthropic e deployato su Hugging Face Spaces.",
+        proj_hotel_title: "App Prenotazione Colazione",
+        proj_hotel_desc: "Un'applicazione web full-stack per gestire le prenotazioni della colazione in hotel. Gli ospiti prenotano fasce orarie con monitoraggio della capacità in tempo reale (max 24 per fascia), rilevamento conflitti e archiviazione persistente nel cloud tramite Supabase.",
+        proj_invoice_title: "Estrattore IA di Fatture",
+        proj_invoice_desc: "Una demo di Document AI costruita per un colloquio tecnico, che mostra l'estrazione automatizzata di dati da fatture non strutturate tramite una pipeline LLM.",
+        proj_gabbiano_title: "Al Gabbiano Pizzeria",
+        proj_gabbiano_desc: "Un sito web per ristorante mobile-first costruito in React. Deployato su GitHub Pages.",
+        proj_vfu_title: "VFU Manager",
+        proj_vfu_desc: "Un modulo verticale Odoo per centri autorizzati di trattamento veicoli fuori uso. Modella il flusso completo dall'accettazione alla chiusura con gate di depolluzione, numerazione automatica CDR, certificati PDF in QWeb e un assistente di conformità IA opzionale."
+      },
+      pt: {
+        proj_salute_title: "Assistente Salute",
+        proj_salute_desc: "Um chatbot de triagem médica em italiano que ajuda os usuários a avaliar sintomas e encontrar o atendimento adequado. Construído com o SDK da Anthropic e implantado no Hugging Face Spaces.",
+        proj_hotel_title: "App de Reserva de Café da Manhã",
+        proj_hotel_desc: "Uma aplicação web full-stack para gerenciar reservas de café da manhã em hotéis. Os hóspedes reservam horários com rastreamento de capacidade em tempo real (máx. 24 por horário), detecção de conflitos e armazenamento persistente na nuvem via Supabase.",
+        proj_invoice_title: "Extrator IA de Faturas",
+        proj_invoice_desc: "Uma demo de Document AI construída para uma entrevista técnica, demonstrando a extração automatizada de dados de faturas a partir de documentos não estruturados usando um pipeline de LLM.",
+        proj_gabbiano_title: "Al Gabbiano Pizzeria",
+        proj_gabbiano_desc: "Um site de restaurante mobile-first construído em React. Implantado no GitHub Pages.",
+        proj_vfu_title: "VFU Manager",
+        proj_vfu_desc: "Um módulo vertical Odoo para centros autorizados de tratamento de veículos em fim de vida. Modela o fluxo completo desde a recepção até o encerramento com portão de despoluição, numeração automática de CDR, certificados PDF em QWeb e um assistente de conformidade com IA opcional."
+      }
+    });
+    window.i18nApply();
+  </script>
 </body>
 </html>
