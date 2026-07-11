@@ -4,19 +4,16 @@
 <head>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!--this is the part that link to .css file --> 
   <link rel="stylesheet" href="css/style.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <meta name="description" content="Articles and writing by P. Antonio Granados on AI, NLP, prompt engineering, and multilingual language technology." />
-
   <meta name="author" content="P. Antonio Granados" />
 
   <meta property="og:title" content="Articles | P. Antonio Granados" />
   <meta property="og:description" content="Writing on AI, NLP, prompt engineering, and multilingual language technology." />
   <meta property="og:type" content="website" />
-  <!-- TODO: replace yoursite.com with real domain once deployed -->
   <meta property="og:url" content="https://saalamandras.github.io/portafolio/articles.html" />
 
   <link rel="canonical" href="https://saalamandras.github.io/portafolio/articles.html" />
@@ -31,10 +28,6 @@
 
 <body class="blueprint-bg">
 
-  <!-- ============================================================
-       HEADER + NAV
-       Identical across all pages. Edit in one place, paste to all.
-       ============================================================ -->
   <header>
     <nav aria-label="Main navigation">
 
@@ -67,10 +60,39 @@
         technology — what I am learning, building, and thinking about.
       </p>
 
-      <!-- ============================================================
-           ARTICLE LIST
+      <div class="section-divider" style="margin-top:32px;"><span class="section-num">01</span><span class="section-label">LATEST</span><div class="rule"></div></div>
 
-           PUBLISHING WORKFLOW
+      <div class="project-grid">
+
+        <article class="project-card" data-animate="delay-1">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
+            <h2 class="card-title" data-i18n="icl_card_title">In-Context Learning Demystified</h2>
+            <span class="tech-line">Prompt Engineering · <time datetime="2026-07-11">July 11, 2026</time></span>
+          </div>
+          <p class="project-description body-text" data-i18n="icl_card_desc">Zero-shot, one-shot, and few-shot prompting patterns — how in-context learning works, when each strategy wins, and how to build a systematic comparison framework.</p>
+          <a href="articles/in-context-learning-demystified.html" class="project-link" data-i18n="read_article">Read Article →</a>
+        </article>
+
+        <article class="project-card" data-animate="delay-2">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
+            <h2 class="card-title" data-i18n="emb_card_title">From One-Hot to Contextual</h2>
+            <span class="tech-line">NLP · <time datetime="2026-07-11">July 11, 2026</time></span>
+          </div>
+          <p class="project-description body-text" data-i18n="emb_card_desc">A practical guide to text embeddings — from Bag-of-Words and TF-IDF to Word2Vec and BERT contextual representations.</p>
+          <a href="articles/from-one-hot-to-contextual.html" class="project-link" data-i18n="read_article">Read Article →</a>
+        </article>
+
+        <article class="project-card" data-animate="delay-3">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;">
+            <h2 class="card-title" data-i18n="tok_card_title">Building Tokenizers from Scratch</h2>
+            <span class="tech-line">NLP · <time datetime="2026-07-11">July 11, 2026</time></span>
+          </div>
+          <p class="project-description body-text" data-i18n="tok_card_desc">What happens before the model thinks — BPE, WordPiece, and why tokenization is the most consequential design decision in the LLM stack.</p>
+          <a href="articles/building-tokenizers-from-scratch.html" class="project-link" data-i18n="read_article">Read Article →</a>
+        </article>
+
+      </div>
+
     </section>
 
   </main>
@@ -87,5 +109,47 @@
   <script src="js/theme.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/typewriter.js"></script>
+
+  <script>
+    window.i18nRegister({
+      en: {
+        read_article: "Read Article →",
+        icl_card_title: "In-Context Learning Demystified",
+        icl_card_desc: "Zero-shot, one-shot, and few-shot prompting patterns — how in-context learning works, when each strategy wins, and how to build a systematic comparison framework.",
+        emb_card_title: "From One-Hot to Contextual",
+        emb_card_desc: "A practical guide to text embeddings — from Bag-of-Words and TF-IDF to Word2Vec and BERT contextual representations.",
+        tok_card_title: "Building Tokenizers from Scratch",
+        tok_card_desc: "What happens before the model thinks — BPE, WordPiece, and why tokenization is the most consequential design decision in the LLM stack."
+      },
+      es: {
+        read_article: "Leer Artículo →",
+        icl_card_title: "Aprendizaje en Contexto Desmitificado",
+        icl_card_desc: "Patrones de prompting zero-shot, one-shot y few-shot — cómo funciona el aprendizaje en contexto, cuándo gana cada estrategia y cómo construir un marco de comparación sistemática.",
+        emb_card_title: "De One-Hot a Contextual",
+        emb_card_desc: "Guía práctica de embeddings de texto — de Bag-of-Words y TF-IDF a representaciones contextuales con Word2Vec y BERT.",
+        tok_card_title: "Construyendo Tokenizadores desde Cero",
+        tok_card_desc: "Lo que ocurre antes de que el modelo piense — BPE, WordPiece y por qué la tokenización es la decisión de diseño más determinante en la pila de LLMs."
+      },
+      it: {
+        read_article: "Leggi Articolo →",
+        icl_card_title: "Apprendimento in Contesto Demistificato",
+        icl_card_desc: "Pattern di prompting zero-shot, one-shot e few-shot — come funziona l'apprendimento in contesto, quando ogni strategia vince e come costruire un framework di confronto sistematico.",
+        emb_card_title: "Da One-Hot a Contestuale",
+        emb_card_desc: "Guida pratica agli embedding di testo — da Bag-of-Words e TF-IDF alle rappresentazioni contestuali con Word2Vec e BERT.",
+        tok_card_title: "Costruire Tokenizer da Zero",
+        tok_card_desc: "Cosa succede prima che il modello pensi — BPE, WordPiece e perché la tokenizzazione è la decisione progettuale più importante nello stack LLM."
+      },
+      pt: {
+        read_article: "Ler Artigo →",
+        icl_card_title: "Aprendizado em Contexto Desmistificado",
+        icl_card_desc: "Padrões de prompting zero-shot, one-shot e few-shot — como o aprendizado em contexto funciona, quando cada estratégia vence e como construir um framework de comparação sistemática.",
+        emb_card_title: "De One-Hot a Contextual",
+        emb_card_desc: "Guia prático de embeddings de texto — de Bag-of-Words e TF-IDF a representações contextuais com Word2Vec e BERT.",
+        tok_card_title: "Construindo Tokenizadores do Zero",
+        tok_card_desc: "O que acontece antes de o modelo pensar — BPE, WordPiece e por que a tokenização é a decisão de design mais consequente na pilha de LLMs."
+      }
+    });
+    window.i18nApply();
+  </script>
 </body>
 </html>

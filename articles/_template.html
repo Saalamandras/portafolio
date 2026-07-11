@@ -5,37 +5,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ============================================================
-       PER-ARTICLE SEO  —  EDIT ALL OF THESE FOR EVERY NEW ARTICLE.
-       These differ for each post (unlike the nav/footer which are shared).
-       ============================================================ -->
-
-  <!-- The search-result snippet. Summarize THIS article in <160 chars. -->
   <meta name="description" content="ARTICLE_DESCRIPTION_HERE" />
   <meta name="author" content="P. Antonio Granados" />
 
-  <!-- OPEN GRAPH — controls the preview card when this article is shared 
-       on LinkedIn, Facebook, WhatsApp, etc. Facebook IGNORES custom share 
-       text and uses these instead, so fill them in carefully. -->
   <meta property="og:title" content="ARTICLE_TITLE_HERE" />
   <meta property="og:description" content="ARTICLE_DESCRIPTION_HERE" />
   <meta property="og:type" content="article" />
-  <!-- TODO: full URL of THIS article, e.g. https://yoursite.com/articles/my-slug.html -->
   <meta property="og:url" content="ARTICLE_URL_HERE" />
-  <!-- TODO: the preview image (meme, graphic, screenshot). Use a FULL URL.
-       This is what shows when the link is shared. Don't leave empty. -->
   <meta property="og:image" content="ARTICLE_IMAGE_URL_HERE" />
 
-  <!-- Twitter/X card — makes shares on X show a large image preview -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="ARTICLE_TITLE_HERE" />
   <meta name="twitter:description" content="ARTICLE_DESCRIPTION_HERE" />
   <meta name="twitter:image" content="ARTICLE_IMAGE_URL_HERE" />
 
-  <!-- TODO: canonical = the full URL of this article -->
   <link rel="canonical" href="ARTICLE_URL_HERE" />
 
-  <!-- Font Awesome — needed for the share + social icons below -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         referrerpolicy="no-referrer" />
@@ -44,30 +29,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css" />
 
-  <!-- TODO: the browser-tab title for THIS article -->
   <title>ARTICLE_TITLE_HERE | P. Antonio Granados</title>
 </head>
 
-<body>
+<body class="blueprint-bg">
 
-  <!-- ============================================================
-       HEADER + NAV
-       Identical to the rest of the site. 
-       NOTE: this file lives in /articles/, one level DEEP. So links to 
-       the top-level pages need "../" in front (go up one folder).
-       That's why it's ../index.html here, not index.html.
-       ============================================================ -->
   <header>
     <nav aria-label="Main navigation">
 
       <a href="../index.html" class="nav-brand">P. Antonio Granados</a>
 
       <ul>
-        <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
-        <li><a href="../projects.html" data-i18n="nav_projects">Projects</a></li>
-        <!-- The article belongs to the Articles section, so mark it current -->
-        <li><a href="../articles.html" aria-current="page" data-i18n="nav_articles">Articles</a></li>
-        <li><a href="../contact.html" data-i18n="nav_contact">Contact</a></li>
+        <li><a href="../index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+        <li><a href="../projects.html" class="nav-link" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="../articles.html" class="nav-link" aria-current="page" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="../contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
       </ul>
 
       <div id="lang-switcher" role="group" aria-label="Language switcher">
@@ -76,167 +52,64 @@
         <button type="button" class="lang-btn" data-lang="it" aria-pressed="false">IT</button>
         <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
       </div>
+      <button class="theme-toggle" aria-label="Switch to light mode">[ LIGHT ]</button>
 
     </nav>
   </header>
 
   <main>
 
-    <!-- The whole post is ONE <article> — it's self-contained content -->
     <article class="post">
 
-      <!-- ===== POST HEADER: title + metadata ===== -->
       <header class="post-header">
-        <!-- TODO: the visible article title -->
-        <h1>ARTICLE_TITLE_HERE</h1>
-
+        <h1 data-i18n="SLUG_title">ARTICLE_TITLE_HERE</h1>
         <p class="post-meta">
-          <!-- TODO: edit BOTH the datetime attribute (YYYY-MM-DD) and visible text -->
           <time datetime="YYYY-MM-DD">Month DD, YYYY</time>
           &middot;
-          <!-- TODO: category — e.g. News, Opinion, Meme, NLP -->
-          <span class="post-category">CATEGORY_HERE</span>
+          <span class="post-category" data-i18n="SLUG_category">CATEGORY_HERE</span>
         </p>
       </header>
 
-      <!-- ============================================================
-           POST BODY
-           Keep ONLY what each post needs. Delete the rest.
-
-           - MEME / IMAGE POST  → keep the <figure> block, delete prose.
-           - OPINION / NEWS POST → keep the prose blocks, delete or keep figure.
-
-           Building blocks you can mix freely:
-             <h2>, <h3>   section headings (don't skip levels)
-             <p>          paragraphs
-             <figure>     image / meme with caption
-             <blockquote> a pulled quote
-             <pre><code>  a code snippet (for technical posts)
-             <ul> / <ol>  lists
-           ============================================================ -->
       <div class="post-body">
-
-        <!-- ----- EXAMPLE: image / meme block ----- -->
-        <!-- alt is REQUIRED: describe the image (or the joke, for a meme) -->
-        <figure>
-          <img src="IMAGE_PATH_HERE" alt="DESCRIBE_THE_IMAGE_HERE" />
-          <figcaption>Optional caption goes here.</figcaption>
-        </figure>
-
-        <!-- ----- EXAMPLE: prose blocks (delete for a pure meme post) ----- -->
-        <p>
-          Opening paragraph. For a quick news post this might be the only 
-          line. For an opinion piece, set up your argument here.
-        </p>
-
-        <h2>A Section Heading</h2>
-        <p>
-          More text. Use h2 for main sections, h3 for sub-points underneath.
-        </p>
-
-        <!-- A pulled quote, e.g. quoting a source or making a point stand out -->
-        <blockquote>
-          A notable quote or a sentence you want to emphasize.
-        </blockquote>
-
-        <!-- A code snippet — only for technical posts. 
-             <pre> preserves spacing/line breaks; <code> marks it as code. -->
-        <pre><code>print("hello world")</code></pre>
-
+        <!-- Article body paragraphs use data-i18n="SLUG_p1", SLUG_p2, etc.
+             The actual text for all 4 languages is in the <script> block below. -->
+        <p data-i18n="SLUG_p1">PARAGRAPH_1_EN</p>
       </div>
 
-      <!-- ============================================================
-           SHARE BAR  —  the YouTube-style share row.
-
-           HOW IT WORKS NOW (with js/share.js):
-           On load, share.js reads this page's real URL (window.location.href)
-           and title (document.title), fills every fallback link below, and
-           wires the native Share button to the Web Share API — with a
-           "copy link" fallback on browsers that don't support it. You only
-           need to keep the <title> and data-share-* attributes accurate;
-           everything else is automatic.
-
-           If you'd rather hardcode a specific canonical URL/title instead of
-           relying on the live page values, set data-share-url / 
-           data-share-title below and share.js will use those instead.
-           ============================================================ -->
       <div class="share-bar"
            data-share-url="ARTICLE_URL_HERE"
            data-share-title="ARTICLE_TITLE_HERE"
            aria-label="Share this article">
 
-        <h2 class="share-heading">Share this</h2>
+        <h2 class="share-heading" data-i18n="share_heading">Share this</h2>
 
-        <!-- ----- NATIVE SHARE BUTTON (OS share sheet, like YouTube mobile) -----
-             This is a <button>, not a link — js/share.js triggers the 
-             Web Share API on click (or copies the link on unsupported 
-             browsers, like Instagram, which has no web share URL). 
-             type="button" stops it from acting like a form-submit. -->
-        <button type="button"
-                id="native-share"
-                class="share-button share-native"
+        <button type="button" id="native-share" class="share-button share-native"
                 aria-label="Share via your device">
           <i class="fa-solid fa-share-nodes"></i>
           <span>Share</span>
         </button>
 
-        <!-- ----- INDIVIDUAL FALLBACK LINKS -----
-             hrefs are filled in automatically by js/share.js on load.
-             All open in a new tab. rel="noopener noreferrer" for security. -->
-
-        <!-- X / Twitter: accepts text + url -->
-        <a href="#"
-           class="share-button share-x"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="Share on X">
+        <a href="#" class="share-button share-x" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
           <i class="fa-brands fa-x-twitter"></i>
         </a>
-
-        <!-- LinkedIn: accepts url only (pulls title from og: tags) -->
-        <a href="#"
-           class="share-button share-linkedin"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="Share on LinkedIn">
+        <a href="#" class="share-button share-linkedin" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
           <i class="fa-brands fa-linkedin"></i>
         </a>
-
-        <!-- Reddit: accepts url + title -->
-        <a href="#"
-           class="share-button share-reddit"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="Share on Reddit">
+        <a href="#" class="share-button share-reddit" target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit">
           <i class="fa-brands fa-reddit"></i>
         </a>
-
-        <!-- WhatsApp: accepts text (put title + url together) -->
-        <a href="#"
-           class="share-button share-whatsapp"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="Share on WhatsApp">
+        <a href="#" class="share-button share-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
           <i class="fa-brands fa-whatsapp"></i>
         </a>
-
-        <!-- Telegram: accepts url + text -->
-        <a href="#"
-           class="share-button share-telegram"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="Share on Telegram">
+        <a href="#" class="share-button share-telegram" target="_blank" rel="noopener noreferrer" aria-label="Share on Telegram">
           <i class="fa-brands fa-telegram"></i>
         </a>
-
-        <!-- Facebook: accepts url ONLY — it ignores custom text and pulls 
-             title/description/image from this article's og: tags. -->
-        <a href="#"
-           class="share-button share-facebook"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="Share on Facebook">
+        <a href="#" class="share-button share-facebook" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
           <i class="fa-brands fa-facebook"></i>
         </a>
-
       </div>
 
-      <!-- Back to the article index. ../ because we're inside /articles/ -->
-      <a href="../articles.html" class="back-link">&larr; Back to all articles</a>
+      <a href="../articles.html" class="back-link" data-i18n="back_to_articles">&larr; Back to all articles</a>
 
     </article>
 
@@ -250,8 +123,44 @@
     </p>
   </footer>
 
-  <script defer src="../js/i18n.js"></script>
-  <script defer src="../js/share.js"></script>
+  <script src="../js/i18n.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/share.js"></script>
+
+  <!-- Per-article translations: registered AFTER i18n.js loads -->
+  <script>
+    window.i18nRegister({
+      en: {
+        SLUG_title: "ARTICLE_TITLE_HERE",
+        SLUG_category: "CATEGORY_HERE",
+        SLUG_p1: "PARAGRAPH_1_EN",
+        back_to_articles: "← Back to all articles",
+        share_heading: "Share this"
+      },
+      es: {
+        SLUG_title: "ARTICLE_TITLE_ES",
+        SLUG_category: "CATEGORY_ES",
+        SLUG_p1: "PARAGRAPH_1_ES",
+        back_to_articles: "← Volver a los artículos",
+        share_heading: "Compartir"
+      },
+      it: {
+        SLUG_title: "ARTICLE_TITLE_IT",
+        SLUG_category: "CATEGORY_IT",
+        SLUG_p1: "PARAGRAPH_1_IT",
+        back_to_articles: "← Torna agli articoli",
+        share_heading: "Condividi"
+      },
+      pt: {
+        SLUG_title: "ARTICLE_TITLE_PT",
+        SLUG_category: "CATEGORY_PT",
+        SLUG_p1: "PARAGRAPH_1_PT",
+        back_to_articles: "← Voltar aos artigos",
+        share_heading: "Compartilhar"
+      }
+    });
+    window.i18nApply();
+  </script>
 
 </body>
 </html>

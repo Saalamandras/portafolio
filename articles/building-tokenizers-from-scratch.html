@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="A language model never sees raw text — it sees token IDs. An in-depth look at BPE, WordPiece, and why tokenization is the most consequential design decision in the LLM stack." />
+  <meta name="author" content="P. Antonio Granados" />
+
+  <meta property="og:title" content="Building Tokenizers from Scratch: What Happens Before the Model Thinks" />
+  <meta property="og:description" content="BPE, WordPiece, and why tokenization is the most consequential design decision in the LLM stack." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://saalamandras.github.io/portafolio/articles/building-tokenizers-from-scratch.html" />
+  <meta property="og:image" content="https://saalamandras.github.io/portafolio/images/Profile_Picture_2026.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Building Tokenizers from Scratch: What Happens Before the Model Thinks" />
+  <meta name="twitter:description" content="BPE, WordPiece, and why tokenization is the most consequential design decision in the LLM stack." />
+  <meta name="twitter:image" content="https://saalamandras.github.io/portafolio/images/Profile_Picture_2026.png" />
+
+  <link rel="canonical" href="https://saalamandras.github.io/portafolio/articles/building-tokenizers-from-scratch.html" />
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        referrerpolicy="no-referrer" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <title>Building Tokenizers from Scratch | P. Antonio Granados</title>
+</head>
+
+<body class="blueprint-bg">
+
+  <header>
+    <nav aria-label="Main navigation">
+      <a href="../index.html" class="nav-brand">P. Antonio Granados</a>
+      <ul>
+        <li><a href="../index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+        <li><a href="../projects.html" class="nav-link" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="../articles.html" class="nav-link" aria-current="page" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="../contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div id="lang-switcher" role="group" aria-label="Language switcher">
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        <button type="button" class="lang-btn" data-lang="it" aria-pressed="false">IT</button>
+        <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
+      </div>
+      <button class="theme-toggle" aria-label="Switch to light mode">[ LIGHT ]</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <article class="post">
+
+      <header class="post-header">
+        <h1 data-i18n="tok_title">Building Tokenizers from Scratch: What Happens Before the Model Thinks</h1>
+        <p class="post-meta">
+          <time datetime="2026-07-11">July 11, 2026</time>
+          &middot;
+          <span class="post-category" data-i18n="tok_category">NLP</span>
+        </p>
+      </header>
+
+      <div class="post-body">
+
+        <p data-i18n="tok_p1">A language model never sees raw text. It sees token IDs. This fundamental fact makes tokenization the first — and often most consequential — design decision in the language model stack. Before a single matrix multiply happens inside GPT or BERT, every character of your prompt has already been chopped, merged, and looked up in a fixed vocabulary, silently dictating sequence length, embedding table size, and inference cost.</p>
+
+        <h2 data-i18n="tok_h1">Tokenization: The Hidden Systems Decision</h2>
+
+        <p data-i18n="tok_p2">Tokenization is often called the "bottleneck before the model." While flashy attention mechanisms and model architectures dominate the conversation, tokenization quietly determines how long your sequences are and how much an inference call costs. The core trade-off is straightforward but profound: small vocabularies yield long sequences and tiny embedding tables; large vocabularies yield short sequences but multi-megabyte embedding tables.</p>
+
+        <p data-i18n="tok_p3">Consider a concrete example: a character-level tokenizer with a vocabulary of 100 tokens requires only around 200 KB for embeddings. However, a 50-word sentence expands into roughly 250 character tokens, demanding 62,500 attention computations per layer. In contrast, a BPE tokenizer with a 50,000-token vocabulary consumes about 97.7 MB for embeddings but compresses the same sentence to roughly 75 tokens, requiring only 5,625 attention computations — a 10x reduction in computational cost. Production systems enthusiastically absorb the memory cost because the attention savings are so dramatic.</p>
+
+        <h2 data-i18n="tok_h2">Building a BPE Tokenizer from Scratch</h2>
+
+        <p data-i18n="tok_p4">Byte Pair Encoding, originally a data compression technique, forms the backbone of GPT-style tokenizers. The algorithm is elegantly simple: start with a character-level vocabulary, count all adjacent character pairs in the training corpus, merge the most frequent pair into a new token, and repeat until you hit the target vocabulary size.</p>
+
+        <p data-i18n="tok_p5">A pure Python implementation from scratch involves several core steps: first, converting text to a list of byte IDs (0–255), then iteratively counting adjacent token pairs across the corpus, finding the most frequent pair, assigning it a new token ID (starting from 256), replacing all instances with the new token, and storing the merge rule. The resulting vocabulary maps token IDs to byte sequences, and the merge rules allow both encoding (applying merges in order) and decoding (reversing the lookup).</p>
+
+        <p data-i18n="tok_p6">Building this yourself reveals nuances that production tokenizers hide. For example, handling end-of-word markers and deciding how to handle spaces — GPT-2 style tokenizers convert spaces to special tokens like Ġ to preserve sentence structure, a detail that dramatically affects how the model learns language patterns.</p>
+
+        <h2 data-i18n="tok_h3">WordPiece: BERT's Approach</h2>
+
+        <p data-i18n="tok_p7">BERT uses WordPiece, a tokenization algorithm that superficially resembles BPE but operates differently under the hood. The training algorithm is similar — it starts from a small vocabulary containing all characters and learns merge rules. However, instead of selecting the most frequent pair to merge, WordPiece scores each candidate pair using the formula:</p>
+
+        <pre><code>score = freq(pair) / (freq(first) × freq(second))</code></pre>
+
+        <p data-i18n="tok_p8">This scoring prioritizes merging pairs where the individual parts are less frequent in the vocabulary, creating subword units that maximize coverage. For example, ("hu", "##gging") will likely merge before ("un", "##able"), even if the latter appears more frequently, because the individual parts are less common.</p>
+
+        <p data-i18n="tok_p9">The tokenization algorithm differs even more dramatically: WordPiece stores only the final vocabulary, not the merge rules. Starting from a word, it finds the longest subword in the vocabulary, splits there, and repeats — a greedy longest-match approach. This is why BERT tokens look like ['token', '##ization'] — the ## prefix indicates continuation of a word.</p>
+
+        <h2 data-i18n="tok_h4">Understanding Tokenization Differences Across Models</h2>
+
+        <p data-i18n="tok_p10">Different models use different tokenizers, and the differences matter. GPT-4 uses o200k_base encoding with a 128k context window, while Claude uses a proprietary BPE implementation, and Gemini uses SentencePiece-based estimation. For multilingual content, the differences can be stark — Korean text can tokenize with 2x token count spread across models on the same string.</p>
+
+        <h2 data-i18n="tok_h5">Practical Token Management with tiktoken</h2>
+
+        <p data-i18n="tok_p11">OpenAI's tiktoken library provides exact token counting for models using cl100k_base and o200k_base encodings. This is essential for managing context windows and optimizing prompts:</p>
+
+        <pre><code>import tiktoken
+enc = tiktoken.encoding_for_model("gpt-4")
+tokens = enc.encode("Your prompt here")
+print(f"Token count: {len(tokens)}")</code></pre>
+
+        <h2 data-i18n="tok_h6">Research Gap: The Hidden Cost of Tokenization</h2>
+
+        <p data-i18n="tok_p12">While researchers spend enormous effort optimizing model architectures and training algorithms, tokenization remains an afterthought in most literature. We lack standardized benchmarks comparing tokenizer efficiency across languages, and there is no consensus on optimal vocabulary size for different domains. The question remains: for a given task and language distribution, what tokenizer configuration minimizes both computational cost and loss of semantic information?</p>
+
+      </div>
+
+      <div class="share-bar"
+           data-share-url="https://saalamandras.github.io/portafolio/articles/building-tokenizers-from-scratch.html"
+           data-share-title="Building Tokenizers from Scratch"
+           aria-label="Share this article">
+
+        <h2 class="share-heading" data-i18n="share_heading">Share this</h2>
+
+        <button type="button" id="native-share" class="share-button share-native" aria-label="Share via your device">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>Share</span>
+        </button>
+
+        <a href="#" class="share-button share-x" target="_blank" rel="noopener noreferrer" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="share-button share-linkedin" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" class="share-button share-reddit" target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit"><i class="fa-brands fa-reddit"></i></a>
+        <a href="#" class="share-button share-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" class="share-button share-telegram" target="_blank" rel="noopener noreferrer" aria-label="Share on Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#" class="share-button share-facebook" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+
+      <a href="../articles.html" class="back-link" data-i18n="back_to_articles">&larr; Back to all articles</a>
+
+    </article>
+
+  </main>
+
+  <footer>
+    <p>
+      &copy; 2026 P. Antonio Granados &mdash;
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
+      <span data-i18n="footer_location">Mestre (VE), Italy</span>
+    </p>
+  </footer>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/share.js"></script>
+
+  <script>
+    window.i18nRegister({
+      en: {
+        tok_title: "Building Tokenizers from Scratch: What Happens Before the Model Thinks",
+        tok_category: "NLP",
+        tok_p1: "A language model never sees raw text. It sees token IDs. This fundamental fact makes tokenization the first — and often most consequential — design decision in the language model stack. Before a single matrix multiply happens inside GPT or BERT, every character of your prompt has already been chopped, merged, and looked up in a fixed vocabulary, silently dictating sequence length, embedding table size, and inference cost.",
+        tok_h1: "Tokenization: The Hidden Systems Decision",
+        tok_p2: "Tokenization is often called the “bottleneck before the model.” While flashy attention mechanisms and model architectures dominate the conversation, tokenization quietly determines how long your sequences are and how much an inference call costs. The core trade-off is straightforward but profound: small vocabularies yield long sequences and tiny embedding tables; large vocabularies yield short sequences but multi-megabyte embedding tables.",
+        tok_p3: "Consider a concrete example: a character-level tokenizer with a vocabulary of 100 tokens requires only around 200 KB for embeddings. However, a 50-word sentence expands into roughly 250 character tokens, demanding 62,500 attention computations per layer. In contrast, a BPE tokenizer with a 50,000-token vocabulary consumes about 97.7 MB for embeddings but compresses the same sentence to roughly 75 tokens, requiring only 5,625 attention computations — a 10x reduction in computational cost. Production systems enthusiastically absorb the memory cost because the attention savings are so dramatic.",
+        tok_h2: "Building a BPE Tokenizer from Scratch",
+        tok_p4: "Byte Pair Encoding, originally a data compression technique, forms the backbone of GPT-style tokenizers. The algorithm is elegantly simple: start with a character-level vocabulary, count all adjacent character pairs in the training corpus, merge the most frequent pair into a new token, and repeat until you hit the target vocabulary size.",
+        tok_p5: "A pure Python implementation from scratch involves several core steps: first, converting text to a list of byte IDs (0–255), then iteratively counting adjacent token pairs across the corpus, finding the most frequent pair, assigning it a new token ID (starting from 256), replacing all instances with the new token, and storing the merge rule. The resulting vocabulary maps token IDs to byte sequences, and the merge rules allow both encoding (applying merges in order) and decoding (reversing the lookup).",
+        tok_p6: "Building this yourself reveals nuances that production tokenizers hide. For example, handling end-of-word markers and deciding how to handle spaces — GPT-2 style tokenizers convert spaces to special tokens like Ġ to preserve sentence structure, a detail that dramatically affects how the model learns language patterns.",
+        tok_h3: "WordPiece: BERT’s Approach",
+        tok_p7: "BERT uses WordPiece, a tokenization algorithm that superficially resembles BPE but operates differently under the hood. The training algorithm is similar — it starts from a small vocabulary containing all characters and learns merge rules. However, instead of selecting the most frequent pair to merge, WordPiece scores each candidate pair using the formula:",
+        tok_p8: "This scoring prioritizes merging pairs where the individual parts are less frequent in the vocabulary, creating subword units that maximize coverage. For example, (“hu”, “##gging”) will likely merge before (“un”, “##able”), even if the latter appears more frequently, because the individual parts are less common.",
+        tok_p9: "The tokenization algorithm differs even more dramatically: WordPiece stores only the final vocabulary, not the merge rules. Starting from a word, it finds the longest subword in the vocabulary, splits there, and repeats — a greedy longest-match approach. This is why BERT tokens look like [‘token’, ‘##ization’] — the ## prefix indicates continuation of a word.",
+        tok_h4: "Understanding Tokenization Differences Across Models",
+        tok_p10: "Different models use different tokenizers, and the differences matter. GPT-4 uses o200k_base encoding with a 128k context window, while Claude uses a proprietary BPE implementation, and Gemini uses SentencePiece-based estimation. For multilingual content, the differences can be stark — Korean text can tokenize with 2x token count spread across models on the same string.",
+        tok_h5: "Practical Token Management with tiktoken",
+        tok_p11: "OpenAI’s tiktoken library provides exact token counting for models using cl100k_base and o200k_base encodings. This is essential for managing context windows and optimizing prompts:",
+        tok_h6: "Research Gap: The Hidden Cost of Tokenization",
+        tok_p12: "While researchers spend enormous effort optimizing model architectures and training algorithms, tokenization remains an afterthought in most literature. We lack standardized benchmarks comparing tokenizer efficiency across languages, and there is no consensus on optimal vocabulary size for different domains. The question remains: for a given task and language distribution, what tokenizer configuration minimizes both computational cost and loss of semantic information?",
+        back_to_articles: "← Back to all articles",
+        share_heading: "Share this"
+      },
+      es: {
+        tok_title: "Construyendo Tokenizadores desde Cero: Lo que Ocurre Antes de que el Modelo Piense",
+        tok_category: "PLN",
+        tok_p1: "Un modelo de lenguaje nunca ve texto crudo. Ve IDs de tokens. Este hecho fundamental convierte a la tokenización en la primera — y a menudo la más determinante — decisión de diseño en la pila de modelos de lenguaje. Antes de que ocurra una sola multiplicación de matrices dentro de GPT o BERT, cada carácter de tu prompt ya ha sido cortado, fusionado y buscado en un vocabulario fijo, dictando silenciosamente la longitud de la secuencia, el tamaño de la tabla de embeddings y el coste de inferencia.",
+        tok_h1: "Tokenización: La Decisión de Sistemas Oculta",
+        tok_p2: "La tokenización suele llamarse el “cuello de botella antes del modelo.” Mientras los llamativos mecanismos de atención y las arquitecturas de modelos dominan la conversación, la tokenización determina silenciosamente cuán largas son tus secuencias y cuánto cuesta una llamada de inferencia. La compensación fundamental es directa pero profunda: vocabularios pequeños producen secuencias largas y tablas de embeddings diminutas; vocabularios grandes producen secuencias cortas pero tablas de embeddings de varios megabytes.",
+        tok_p3: "Consideremos un ejemplo concreto: un tokenizador a nivel de caracteres con un vocabulario de 100 tokens requiere solo unos 200 KB para embeddings. Sin embargo, una oración de 50 palabras se expande a aproximadamente 250 tokens de caracteres, exigiendo 62.500 cálculos de atención por capa. En cambio, un tokenizador BPE con un vocabulario de 50.000 tokens consume unos 97,7 MB para embeddings pero comprime la misma oración a unos 75 tokens, requiriendo solo 5.625 cálculos de atención — una reducción de 10x en coste computacional. Los sistemas de producción absorben con entusiasmo el coste de memoria porque el ahorro en atención es tan dramático.",
+        tok_h2: "Construyendo un Tokenizador BPE desde Cero",
+        tok_p4: "Byte Pair Encoding, originalmente una técnica de compresión de datos, forma la columna vertebral de los tokenizadores estilo GPT. El algoritmo es elegantemente simple: comienza con un vocabulario a nivel de caracteres, cuenta todos los pares de caracteres adyacentes en el corpus de entrenamiento, fusiona el par más frecuente en un nuevo token y repite hasta alcanzar el tamaño de vocabulario objetivo.",
+        tok_p5: "Una implementación pura en Python desde cero implica varios pasos fundamentales: primero, convertir texto a una lista de IDs de bytes (0–255), luego contar iterativamente los pares de tokens adyacentes en el corpus, encontrar el par más frecuente, asignarle un nuevo ID de token (comenzando desde 256), reemplazar todas las instancias con el nuevo token y almacenar la regla de fusión. El vocabulario resultante mapea IDs de tokens a secuencias de bytes, y las reglas de fusión permiten tanto la codificación (aplicando fusiones en orden) como la decodificación (invirtiendo la búsqueda).",
+        tok_p6: "Construirlo tú mismo revela matices que los tokenizadores de producción ocultan. Por ejemplo, el manejo de marcadores de fin de palabra y la decisión de cómo tratar los espacios — los tokenizadores estilo GPT-2 convierten los espacios en tokens especiales como Ġ para preservar la estructura de la oración, un detalle que afecta drásticamente cómo el modelo aprende patrones lingüísticos.",
+        tok_h3: "WordPiece: El Enfoque de BERT",
+        tok_p7: "BERT usa WordPiece, un algoritmo de tokenización que superficialmente se asemeja a BPE pero opera de forma diferente internamente. El algoritmo de entrenamiento es similar — parte de un vocabulario pequeño que contiene todos los caracteres y aprende reglas de fusión. Sin embargo, en lugar de seleccionar el par más frecuente para fusionar, WordPiece puntúa cada par candidato usando la fórmula:",
+        tok_p8: "Esta puntuación prioriza la fusión de pares donde las partes individuales son menos frecuentes en el vocabulario, creando unidades de subpalabras que maximizan la cobertura. Por ejemplo, (“hu”, “##gging”) probablemente se fusionará antes que (“un”, “##able”), incluso si este último aparece con más frecuencia, porque las partes individuales son menos comunes.",
+        tok_p9: "El algoritmo de tokenización difiere aún más drásticamente: WordPiece almacena solo el vocabulario final, no las reglas de fusión. Partiendo de una palabra, encuentra la subpalabra más larga en el vocabulario, divide allí y repite — un enfoque voraz de coincidencia más larga. Por eso los tokens de BERT parecen [‘token’, ‘##ization’] — el prefijo ## indica continuación de una palabra.",
+        tok_h4: "Entendiendo las Diferencias de Tokenización entre Modelos",
+        tok_p10: "Diferentes modelos usan diferentes tokenizadores, y las diferencias importan. GPT-4 usa la codificación o200k_base con una ventana de contexto de 128k, mientras que Claude usa una implementación BPE propietaria y Gemini usa estimación basada en SentencePiece. Para contenido multilingüe, las diferencias pueden ser notables — el texto en coreano puede tokenizarse con una diferencia de 2x en el conteo de tokens entre modelos para la misma cadena.",
+        tok_h5: "Gestión Práctica de Tokens con tiktoken",
+        tok_p11: "La librería tiktoken de OpenAI proporciona un conteo exacto de tokens para modelos que usan las codificaciones cl100k_base y o200k_base. Esto es esencial para gestionar ventanas de contexto y optimizar prompts:",
+        tok_h6: "Brecha de Investigación: El Coste Oculto de la Tokenización",
+        tok_p12: "Mientras los investigadores dedican un esfuerzo enorme a optimizar arquitecturas de modelos y algoritmos de entrenamiento, la tokenización sigue siendo un aspecto secundario en la mayoría de la literatura. Carecemos de benchmarks estandarizados que comparen la eficiencia de tokenizadores entre idiomas, y no hay consenso sobre el tamaño óptimo de vocabulario para diferentes dominios. La pregunta persiste: para una tarea y distribución lingüística dadas, ¿qué configuración de tokenizador minimiza tanto el coste computacional como la pérdida de información semántica?",
+        back_to_articles: "← Volver a los artículos",
+        share_heading: "Compartir"
+      },
+      it: {
+        tok_title: "Costruire Tokenizer da Zero: Cosa Succede Prima che il Modello Pensi",
+        tok_category: "NLP",
+        tok_p1: "Un modello linguistico non vede mai testo grezzo. Vede ID di token. Questo fatto fondamentale rende la tokenizzazione la prima — e spesso la più consequenziale — decisione progettuale nello stack dei modelli di linguaggio. Prima che una singola moltiplicazione di matrici avvenga dentro GPT o BERT, ogni carattere del tuo prompt è già stato tagliato, fuso e cercato in un vocabolario fisso, dettando silenziosamente la lunghezza della sequenza, la dimensione della tabella di embedding e il costo di inferenza.",
+        tok_h1: "Tokenizzazione: La Decisione di Sistema Nascosta",
+        tok_p2: "La tokenizzazione viene spesso definita il “collo di bottiglia prima del modello.” Mentre i meccanismi di attenzione appariscenti e le architetture dei modelli dominano la conversazione, la tokenizzazione determina silenziosamente quanto lunghe sono le sequenze e quanto costa una chiamata di inferenza. Il compromesso fondamentale è diretto ma profondo: vocabolari piccoli producono sequenze lunghe e tabelle di embedding minuscole; vocabolari grandi producono sequenze corte ma tabelle di embedding da diversi megabyte.",
+        tok_p3: "Consideriamo un esempio concreto: un tokenizzatore a livello di caratteri con un vocabolario di 100 token richiede solo circa 200 KB per gli embedding. Tuttavia, una frase di 50 parole si espande in circa 250 token di caratteri, richiedendo 62.500 calcoli di attenzione per layer. Al contrario, un tokenizzatore BPE con un vocabolario di 50.000 token consuma circa 97,7 MB per gli embedding ma comprime la stessa frase a circa 75 token, richiedendo solo 5.625 calcoli di attenzione — una riduzione di 10x nel costo computazionale. I sistemi di produzione assorbono con entusiasmo il costo di memoria perché il risparmio nell’attenzione è così drammatico.",
+        tok_h2: "Costruire un Tokenizzatore BPE da Zero",
+        tok_p4: "Byte Pair Encoding, originariamente una tecnica di compressione dati, costituisce la spina dorsale dei tokenizzatori in stile GPT. L’algoritmo è elegantemente semplice: inizia con un vocabolario a livello di caratteri, conta tutte le coppie di caratteri adiacenti nel corpus di addestramento, fonde la coppia più frequente in un nuovo token e ripete fino a raggiungere la dimensione target del vocabolario.",
+        tok_p5: "Un’implementazione pura in Python da zero prevede diversi passaggi fondamentali: prima, convertire il testo in una lista di ID di byte (0–255), poi contare iterativamente le coppie di token adiacenti nel corpus, trovare la coppia più frequente, assegnarle un nuovo ID di token (a partire da 256), sostituire tutte le istanze con il nuovo token e memorizzare la regola di fusione. Il vocabolario risultante mappa gli ID dei token su sequenze di byte, e le regole di fusione permettono sia la codifica (applicando le fusioni in ordine) sia la decodifica (invertendo la ricerca).",
+        tok_p6: "Costruirlo da soli rivela sfumature che i tokenizzatori di produzione nascondono. Per esempio, la gestione dei marcatori di fine parola e la decisione su come trattare gli spazi — i tokenizzatori in stile GPT-2 convertono gli spazi in token speciali come Ġ per preservare la struttura della frase, un dettaglio che influisce drasticamente su come il modello apprende i pattern linguistici.",
+        tok_h3: "WordPiece: L’Approccio di BERT",
+        tok_p7: "BERT usa WordPiece, un algoritmo di tokenizzazione che superficialmente assomiglia a BPE ma opera diversamente internamente. L’algoritmo di addestramento è simile — parte da un piccolo vocabolario contenente tutti i caratteri e apprende regole di fusione. Tuttavia, invece di selezionare la coppia più frequente da fondere, WordPiece valuta ogni coppia candidata usando la formula:",
+        tok_p8: "Questo punteggio dà priorità alla fusione di coppie dove le parti individuali sono meno frequenti nel vocabolario, creando unità di sottoparole che massimizzano la copertura. Per esempio, (“hu”, “##gging”) verrà probabilmente fusa prima di (“un”, “##able”), anche se quest’ultima appare più frequentemente, perché le parti individuali sono meno comuni.",
+        tok_p9: "L’algoritmo di tokenizzazione differisce in modo ancora più drastico: WordPiece memorizza solo il vocabolario finale, non le regole di fusione. Partendo da una parola, trova la sottoparola più lunga nel vocabolario, divide lì e ripete — un approccio greedy di corrispondenza più lunga. Per questo i token di BERT appaiono come [‘token’, ‘##ization’] — il prefisso ## indica la continuazione di una parola.",
+        tok_h4: "Comprendere le Differenze di Tokenizzazione tra Modelli",
+        tok_p10: "Modelli diversi usano tokenizzatori diversi, e le differenze contano. GPT-4 usa la codifica o200k_base con una finestra di contesto da 128k, mentre Claude usa un’implementazione BPE proprietaria e Gemini usa una stima basata su SentencePiece. Per contenuti multilingue, le differenze possono essere nette — il testo coreano può tokenizzarsi con una differenza di 2x nel conteggio dei token tra modelli sulla stessa stringa.",
+        tok_h5: "Gestione Pratica dei Token con tiktoken",
+        tok_p11: "La libreria tiktoken di OpenAI fornisce un conteggio esatto dei token per modelli che usano le codifiche cl100k_base e o200k_base. Questo è essenziale per gestire le finestre di contesto e ottimizzare i prompt:",
+        tok_h6: "Gap di Ricerca: Il Costo Nascosto della Tokenizzazione",
+        tok_p12: "Mentre i ricercatori dedicano uno sforzo enorme all’ottimizzazione delle architetture dei modelli e degli algoritmi di addestramento, la tokenizzazione rimane un aspetto secondario nella maggior parte della letteratura. Mancano benchmark standardizzati che confrontino l’efficienza dei tokenizzatori tra le lingue, e non c’è consenso sulla dimensione ottimale del vocabolario per diversi domini. La domanda resta: per un dato compito e distribuzione linguistica, quale configurazione di tokenizzatore minimizza sia il costo computazionale che la perdita di informazione semantica?",
+        back_to_articles: "← Torna agli articoli",
+        share_heading: "Condividi"
+      },
+      pt: {
+        tok_title: "Construindo Tokenizadores do Zero: O que Acontece Antes de o Modelo Pensar",
+        tok_category: "PLN",
+        tok_p1: "Um modelo de linguagem nunca vê texto bruto. Ele vê IDs de tokens. Esse fato fundamental torna a tokenização a primeira — e frequentemente a mais consequente — decisão de design na pilha de modelos de linguagem. Antes que uma única multiplicação de matrizes aconteça dentro do GPT ou BERT, cada caractere do seu prompt já foi cortado, fundido e procurado em um vocabulário fixo, ditando silenciosamente o comprimento da sequência, o tamanho da tabela de embeddings e o custo de inferência.",
+        tok_h1: "Tokenização: A Decisão de Sistema Oculta",
+        tok_p2: "A tokenização é frequentemente chamada de “gargalo antes do modelo.” Enquanto mecanismos de atenção chamativos e arquiteturas de modelos dominam a conversa, a tokenização determina silenciosamente quão longas são suas sequências e quanto custa uma chamada de inferência. A compensação fundamental é direta mas profunda: vocabulários pequenos produzem sequências longas e tabelas de embeddings minúsculas; vocabulários grandes produzem sequências curtas mas tabelas de embeddings de vários megabytes.",
+        tok_p3: "Considere um exemplo concreto: um tokenizador a nível de caracteres com um vocabulário de 100 tokens requer apenas cerca de 200 KB para embeddings. No entanto, uma frase de 50 palavras se expande para aproximadamente 250 tokens de caracteres, exigindo 62.500 cálculos de atenção por camada. Em contraste, um tokenizador BPE com um vocabulário de 50.000 tokens consome cerca de 97,7 MB para embeddings mas comprime a mesma frase para aproximadamente 75 tokens, exigindo apenas 5.625 cálculos de atenção — uma redução de 10x no custo computacional. Sistemas de produção absorvem entusiasticamente o custo de memória porque a economia em atenção é tão dramática.",
+        tok_h2: "Construindo um Tokenizador BPE do Zero",
+        tok_p4: "Byte Pair Encoding, originalmente uma técnica de compressão de dados, forma a espinha dorsal dos tokenizadores estilo GPT. O algoritmo é elegantemente simples: comece com um vocabulário a nível de caracteres, conte todos os pares de caracteres adjacentes no corpus de treinamento, funda o par mais frequente em um novo token e repita até atingir o tamanho alvo do vocabulário.",
+        tok_p5: "Uma implementação pura em Python do zero envolve vários passos fundamentais: primeiro, converter texto em uma lista de IDs de bytes (0–255), depois contar iterativamente os pares de tokens adjacentes no corpus, encontrar o par mais frequente, atribuir-lhe um novo ID de token (começando em 256), substituir todas as instâncias pelo novo token e armazenar a regra de fusão. O vocabulário resultante mapeia IDs de tokens para sequências de bytes, e as regras de fusão permitem tanto a codificação (aplicando fusões em ordem) quanto a decodificação (invertendo a busca).",
+        tok_p6: "Construir isso você mesmo revela nuances que tokenizadores de produção escondem. Por exemplo, o tratamento de marcadores de fim de palavra e a decisão de como lidar com espaços — tokenizadores estilo GPT-2 convertem espaços em tokens especiais como Ġ para preservar a estrutura da frase, um detalhe que afeta dramaticamente como o modelo aprende padrões linguísticos.",
+        tok_h3: "WordPiece: A Abordagem do BERT",
+        tok_p7: "O BERT usa WordPiece, um algoritmo de tokenização que superficialmente se assemelha ao BPE mas opera de forma diferente internamente. O algoritmo de treinamento é similar — começa com um vocabulário pequeno contendo todos os caracteres e aprende regras de fusão. No entanto, em vez de selecionar o par mais frequente para fundir, o WordPiece pontua cada par candidato usando a fórmula:",
+        tok_p8: "Essa pontuação prioriza a fusão de pares onde as partes individuais são menos frequentes no vocabulário, criando unidades de subpalavras que maximizam a cobertura. Por exemplo, (“hu”, “##gging”) provavelmente será fundido antes de (“un”, “##able”), mesmo que este último apareça com mais frequência, porque as partes individuais são menos comuns.",
+        tok_p9: "O algoritmo de tokenização difere de forma ainda mais dramática: o WordPiece armazena apenas o vocabulário final, não as regras de fusão. Partindo de uma palavra, encontra a subpalavra mais longa no vocabulário, divide ali e repete — uma abordagem gulosa de correspondência mais longa. Por isso os tokens do BERT parecem [‘token’, ‘##ization’] — o prefixo ## indica continuação de uma palavra.",
+        tok_h4: "Entendendo as Diferenças de Tokenização entre Modelos",
+        tok_p10: "Modelos diferentes usam tokenizadores diferentes, e as diferenças importam. GPT-4 usa a codificação o200k_base com uma janela de contexto de 128k, enquanto o Claude usa uma implementação BPE proprietária e o Gemini usa estimação baseada em SentencePiece. Para conteúdo multilíngue, as diferenças podem ser marcantes — texto em coreano pode tokenizar com uma diferença de 2x na contagem de tokens entre modelos na mesma string.",
+        tok_h5: "Gestão Prática de Tokens com tiktoken",
+        tok_p11: "A biblioteca tiktoken da OpenAI fornece contagem exata de tokens para modelos que usam as codificações cl100k_base e o200k_base. Isso é essencial para gerenciar janelas de contexto e otimizar prompts:",
+        tok_h6: "Lacuna de Pesquisa: O Custo Oculto da Tokenização",
+        tok_p12: "Enquanto pesquisadores dedicam esforço enorme à otimização de arquiteturas de modelos e algoritmos de treinamento, a tokenização permanece um aspecto secundário na maioria da literatura. Faltam benchmarks padronizados comparando a eficiência de tokenizadores entre idiomas, e não há consenso sobre o tamanho ideal de vocabulário para diferentes domínios. A pergunta persiste: para uma determinada tarefa e distribuição linguística, qual configuração de tokenizador minimiza tanto o custo computacional quanto a perda de informação semântica?",
+        back_to_articles: "← Voltar aos artigos",
+        share_heading: "Compartilhar"
+      }
+    });
+    window.i18nApply();
+  </script>
+
+</body>
+</html>

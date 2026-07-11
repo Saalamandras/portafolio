@@ -2,8 +2,13 @@
    i18n.js — functional EN / ES / IT / PT switcher
    Include on every page. Persists the choice in localStorage under
    "site-lang" so it carries across page navigation. Translates any
-   element carrying a [data-i18n] key; article body copy is intentionally
-   left out of this system (individual posts are authored in one language).
+   element carrying a [data-i18n] key.
+
+   Per-page translations (e.g. article body copy) can be registered at
+   runtime via window.i18nRegister(extraDict). The extraDict format is
+   identical to the built-in translations object:
+     { en: { key: "value" }, es: { key: "valor" }, ... }
+   After registering, call window.i18nApply() to re-render.
    ========================================================================== */
 (function () {
   "use strict";
@@ -170,13 +175,27 @@
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
   }
 
+  /* Per-page extra translations (merged on top of the built-in dict) */
+  var extras = { en: {}, es: {}, it: {}, pt: {} };
+
   function applyLang(lang) {
-    var dict = translations[lang] || translations[DEFAULT_LANG];
+    var base = translations[lang] || translations[DEFAULT_LANG];
+    var extra = extras[lang] || {};
+    /* Merge: per-page keys override built-in keys */
+    var dict = Object.assign({}, base, extra);
+
     document.documentElement.setAttribute("lang", lang);
 
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var key = el.getAttribute("data-i18n");
-      if (dict[key]) el.textContent = dict[key];
+      if (dict[key] != null) {
+        /* Support HTML content (e.g. <code> inside paragraphs) */
+        if (dict[key].indexOf("<") !== -1) {
+          el.innerHTML = dict[key];
+        } else {
+          el.textContent = dict[key];
+        }
+      }
     });
 
     document.querySelectorAll(".lang-btn").forEach(function (btn) {
@@ -187,6 +206,20 @@
     /* Notify other scripts (e.g. typewriter.js) that translations have been applied */
     document.dispatchEvent(new CustomEvent("i18n:applied", { detail: { lang: lang } }));
   }
+
+  /* Public API: register extra translations from article pages */
+  window.i18nRegister = function (extraDict) {
+    ["en", "es", "it", "pt"].forEach(function (lang) {
+      if (extraDict[lang]) {
+        Object.assign(extras[lang], extraDict[lang]);
+      }
+    });
+  };
+
+  /* Public API: re-apply current language (call after i18nRegister) */
+  window.i18nApply = function () {
+    applyLang(getLang());
+  };
 
   document.addEventListener("DOMContentLoaded", function () {
     var current = getLang();

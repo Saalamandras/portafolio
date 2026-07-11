@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="A practical guide to text embeddings — from Bag-of-Words and TF-IDF to Word2Vec and BERT contextual representations." />
+  <meta name="author" content="P. Antonio Granados" />
+
+  <meta property="og:title" content="From One-Hot to Contextual: A Practical Guide to Text Embeddings" />
+  <meta property="og:description" content="Understanding the evolution from sparse representations to dense contextual vectors — essential for any NLP practitioner." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://saalamandras.github.io/portafolio/articles/from-one-hot-to-contextual.html" />
+  <meta property="og:image" content="https://saalamandras.github.io/portafolio/images/Profile_Picture_2026.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="From One-Hot to Contextual: A Practical Guide to Text Embeddings" />
+  <meta name="twitter:description" content="Understanding the evolution from sparse representations to dense contextual vectors." />
+  <meta name="twitter:image" content="https://saalamandras.github.io/portafolio/images/Profile_Picture_2026.png" />
+
+  <link rel="canonical" href="https://saalamandras.github.io/portafolio/articles/from-one-hot-to-contextual.html" />
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        referrerpolicy="no-referrer" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <title>From One-Hot to Contextual | P. Antonio Granados</title>
+</head>
+
+<body class="blueprint-bg">
+
+  <header>
+    <nav aria-label="Main navigation">
+      <a href="../index.html" class="nav-brand">P. Antonio Granados</a>
+      <ul>
+        <li><a href="../index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+        <li><a href="../projects.html" class="nav-link" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="../articles.html" class="nav-link" aria-current="page" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="../contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div id="lang-switcher" role="group" aria-label="Language switcher">
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        <button type="button" class="lang-btn" data-lang="it" aria-pressed="false">IT</button>
+        <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
+      </div>
+      <button class="theme-toggle" aria-label="Switch to light mode">[ LIGHT ]</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <article class="post">
+
+      <header class="post-header">
+        <h1 data-i18n="emb_title">From One-Hot to Contextual: A Practical Guide to Text Embeddings</h1>
+        <p class="post-meta">
+          <time datetime="2026-07-11">July 11, 2026</time>
+          &middot;
+          <span class="post-category" data-i18n="emb_category">NLP</span>
+        </p>
+      </header>
+
+      <div class="post-body">
+
+        <p data-i18n="emb_p1">Text embeddings are the foundation of modern NLP. They transform human language into numerical vectors that machines can process. Understanding this evolution — from sparse representations to dense contextual vectors — is essential for any practitioner building production systems.</p>
+
+        <h2 data-i18n="emb_h1">The Evolution: Three Generations of Embeddings</h2>
+
+        <p data-i18n="emb_p2">Bag-of-Words (BoW) represents the simplest approach: count word frequencies, ignore order. A 50,000-word vocabulary yields a 50,000-dimensional sparse vector. Implement it in five lines with CountVectorizer, but watch memory blow up as documents grow. BoW treats "good" and "great" as independent features — missing semantic relationships entirely.</p>
+
+        <p data-i18n="emb_p3">TF-IDF improves on BoW by weighting terms based on their importance. Words appearing in many documents get penalized; rare but informative words get boosted. This simple change dramatically improves retrieval performance. Implement it with TfidfVectorizer and you'll see better results on most classification tasks.</p>
+
+        <p data-i18n="emb_p4">Word2Vec represents a paradigm shift. Using the Skip-gram architecture, it learns dense 300-dimensional vectors where semantically similar words cluster together. "King - man + woman ≈ queen" became the iconic demonstration. The key insight: words appearing in similar contexts have similar meanings.</p>
+
+        <p data-i18n="emb_p5">Contextual Embeddings finally arrived with BERT in 2018. Unlike Word2Vec's static vectors, BERT generates different representations for the same word depending on its context. "Bank" in "river bank" differs from "bank" in "financial bank" — a distinction static embeddings can never capture.</p>
+
+        <h2 data-i18n="emb_h2">Hands-On Implementation</h2>
+
+        <p data-i18n="emb_p6">Loading pretrained embeddings is straightforward. For GloVe, download the 300D vectors and build a simple lookup dictionary. For FastText, use fasttext.load_model() to get subword information that handles out-of-vocabulary words gracefully.</p>
+
+        <pre><code>import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from gensim.models import KeyedVectors
+
+# Load GloVe
+glove = KeyedVectors.load_word2vec_format('glove.6B.300d.txt', binary=False, no_header=True)
+
+# Load FastText for OOV handling
+import fasttext
+ft_model = fasttext.load_model('cc.en.300.bin')</code></pre>
+
+        <p data-i18n="emb_p7">Building a sentiment classifier using embeddings is educational: average the word vectors in each document and train a logistic regression classifier on top. You'll see GloVe outperform TF-IDF on semantic tasks but struggle with domain-specific terms.</p>
+
+        <h2 data-i18n="emb_h3">Visualizing Embedding Spaces</h2>
+
+        <p data-i18n="emb_p8">t-SNE projection reveals the structure: semantically related words cluster together, dimensions capture surprisingly interpretable features, and visualization immediately validates whether your embeddings learned meaningful relationships.</p>
+
+        <pre><code>from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+
+tsne = TSNE(n_components=2, random_state=42)
+embeddings_2d = tsne.fit_transform(word_vectors)</code></pre>
+
+        <h2 data-i18n="emb_h4">The Research Gap</h2>
+
+        <p data-i18n="emb_p9">Static embeddings are solved. But the open-source vs. proprietary embedding debate remains unsettled. Commercial models like OpenAI's text-embedding-3-small and text-embedding-3-large consistently outperform open alternatives on MTEB benchmarks, but at significant cost. The trade-off isn't just accuracy — it's about data privacy, latency requirements, and fine-tuning capabilities.</p>
+
+        <p data-i18n="emb_p10">When should you pay for proprietary embeddings versus hosting open models? Production experience suggests: use proprietary for customer-facing applications where accuracy directly impacts revenue, and open-source for internal tools where cost scales with query volume. But systematic guidance is lacking.</p>
+
+      </div>
+
+      <div class="share-bar"
+           data-share-url="https://saalamandras.github.io/portafolio/articles/from-one-hot-to-contextual.html"
+           data-share-title="From One-Hot to Contextual: A Practical Guide to Text Embeddings"
+           aria-label="Share this article">
+
+        <h2 class="share-heading" data-i18n="share_heading">Share this</h2>
+
+        <button type="button" id="native-share" class="share-button share-native" aria-label="Share via your device">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>Share</span>
+        </button>
+
+        <a href="#" class="share-button share-x" target="_blank" rel="noopener noreferrer" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="share-button share-linkedin" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" class="share-button share-reddit" target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit"><i class="fa-brands fa-reddit"></i></a>
+        <a href="#" class="share-button share-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" class="share-button share-telegram" target="_blank" rel="noopener noreferrer" aria-label="Share on Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#" class="share-button share-facebook" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+
+      <a href="../articles.html" class="back-link" data-i18n="back_to_articles">&larr; Back to all articles</a>
+
+    </article>
+
+  </main>
+
+  <footer>
+    <p>
+      &copy; 2026 P. Antonio Granados &mdash;
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
+      <span data-i18n="footer_location">Mestre (VE), Italy</span>
+    </p>
+  </footer>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/share.js"></script>
+
+  <script>
+    window.i18nRegister({
+      en: {
+        emb_title: "From One-Hot to Contextual: A Practical Guide to Text Embeddings",
+        emb_category: "NLP",
+        emb_p1: "Text embeddings are the foundation of modern NLP. They transform human language into numerical vectors that machines can process. Understanding this evolution — from sparse representations to dense contextual vectors — is essential for any practitioner building production systems.",
+        emb_h1: "The Evolution: Three Generations of Embeddings",
+        emb_p2: "Bag-of-Words (BoW) represents the simplest approach: count word frequencies, ignore order. A 50,000-word vocabulary yields a 50,000-dimensional sparse vector. Implement it in five lines with CountVectorizer, but watch memory blow up as documents grow. BoW treats “good” and “great” as independent features — missing semantic relationships entirely.",
+        emb_p3: "TF-IDF improves on BoW by weighting terms based on their importance. Words appearing in many documents get penalized; rare but informative words get boosted. This simple change dramatically improves retrieval performance. Implement it with TfidfVectorizer and you’ll see better results on most classification tasks.",
+        emb_p4: "Word2Vec represents a paradigm shift. Using the Skip-gram architecture, it learns dense 300-dimensional vectors where semantically similar words cluster together. “King - man + woman ≈ queen” became the iconic demonstration. The key insight: words appearing in similar contexts have similar meanings.",
+        emb_p5: "Contextual Embeddings finally arrived with BERT in 2018. Unlike Word2Vec’s static vectors, BERT generates different representations for the same word depending on its context. “Bank” in “river bank” differs from “bank” in “financial bank” — a distinction static embeddings can never capture.",
+        emb_h2: "Hands-On Implementation",
+        emb_p6: "Loading pretrained embeddings is straightforward. For GloVe, download the 300D vectors and build a simple lookup dictionary. For FastText, use fasttext.load_model() to get subword information that handles out-of-vocabulary words gracefully.",
+        emb_p7: "Building a sentiment classifier using embeddings is educational: average the word vectors in each document and train a logistic regression classifier on top. You’ll see GloVe outperform TF-IDF on semantic tasks but struggle with domain-specific terms.",
+        emb_h3: "Visualizing Embedding Spaces",
+        emb_p8: "t-SNE projection reveals the structure: semantically related words cluster together, dimensions capture surprisingly interpretable features, and visualization immediately validates whether your embeddings learned meaningful relationships.",
+        emb_h4: "The Research Gap",
+        emb_p9: "Static embeddings are solved. But the open-source vs. proprietary embedding debate remains unsettled. Commercial models like OpenAI’s text-embedding-3-small and text-embedding-3-large consistently outperform open alternatives on MTEB benchmarks, but at significant cost. The trade-off isn’t just accuracy — it’s about data privacy, latency requirements, and fine-tuning capabilities.",
+        emb_p10: "When should you pay for proprietary embeddings versus hosting open models? Production experience suggests: use proprietary for customer-facing applications where accuracy directly impacts revenue, and open-source for internal tools where cost scales with query volume. But systematic guidance is lacking.",
+        back_to_articles: "← Back to all articles",
+        share_heading: "Share this"
+      },
+      es: {
+        emb_title: "De One-Hot a Contextual: Guía Práctica de Embeddings de Texto",
+        emb_category: "PLN",
+        emb_p1: "Los embeddings de texto son la base del PLN moderno. Transforman el lenguaje humano en vectores numéricos que las máquinas pueden procesar. Comprender esta evolución — de representaciones dispersas a vectores densos contextuales — es esencial para cualquier profesional que construya sistemas de producción.",
+        emb_h1: "La Evolución: Tres Generaciones de Embeddings",
+        emb_p2: "Bag-of-Words (BoW) representa el enfoque más simple: contar frecuencias de palabras, ignorar el orden. Un vocabulario de 50.000 palabras produce un vector disperso de 50.000 dimensiones. Impleméntalo en cinco líneas con CountVectorizer, pero cuidado con la explosión de memoria a medida que crecen los documentos. BoW trata “bueno” y “excelente” como características independientes — perdiendo las relaciones semánticas por completo.",
+        emb_p3: "TF-IDF mejora BoW ponderando los términos según su importancia. Las palabras que aparecen en muchos documentos son penalizadas; las palabras raras pero informativas reciben más peso. Este simple cambio mejora drásticamente el rendimiento en recuperación. Impleméntalo con TfidfVectorizer y verás mejores resultados en la mayoría de tareas de clasificación.",
+        emb_p4: "Word2Vec representa un cambio de paradigma. Usando la arquitectura Skip-gram, aprende vectores densos de 300 dimensiones donde las palabras semánticamente similares se agrupan. “Rey - hombre + mujer ≈ reina” se convirtió en la demostración icónica. La idea clave: las palabras que aparecen en contextos similares tienen significados similares.",
+        emb_p5: "Los Embeddings Contextuales finalmente llegaron con BERT en 2018. A diferencia de los vectores estáticos de Word2Vec, BERT genera representaciones diferentes para la misma palabra dependiendo de su contexto. “Banco” en “banco del río” difiere de “banco” en “banco financiero” — una distinción que los embeddings estáticos nunca pueden capturar.",
+        emb_h2: "Implementación Práctica",
+        emb_p6: "Cargar embeddings preentrenados es sencillo. Para GloVe, descarga los vectores de 300 dimensiones y construye un diccionario de búsqueda simple. Para FastText, usa fasttext.load_model() para obtener información de subpalabras que maneja elegantemente las palabras fuera del vocabulario.",
+        emb_p7: "Construir un clasificador de sentimientos usando embeddings es instructivo: promedia los vectores de palabras en cada documento y entrena un clasificador de regresión logística encima. Verás que GloVe supera a TF-IDF en tareas semánticas pero tiene dificultades con términos específicos del dominio.",
+        emb_h3: "Visualizando Espacios de Embeddings",
+        emb_p8: "La proyección t-SNE revela la estructura: las palabras semánticamente relacionadas se agrupan, las dimensiones capturan características sorprendentemente interpretables y la visualización valida inmediatamente si tus embeddings aprendieron relaciones significativas.",
+        emb_h4: "La Brecha de Investigación",
+        emb_p9: "Los embeddings estáticos están resueltos. Pero el debate entre embeddings de código abierto y propietarios sigue sin resolverse. Los modelos comerciales como text-embedding-3-small y text-embedding-3-large de OpenAI superan consistentemente a las alternativas abiertas en los benchmarks MTEB, pero a un coste significativo. La compensación no es solo precisión — se trata de privacidad de datos, requisitos de latencia y capacidades de ajuste fino.",
+        emb_p10: "¿Cuándo deberías pagar por embeddings propietarios frente a alojar modelos abiertos? La experiencia en producción sugiere: usa propietarios para aplicaciones orientadas al cliente donde la precisión impacta directamente en los ingresos, y de código abierto para herramientas internas donde el coste escala con el volumen de consultas. Pero la orientación sistemática es insuficiente.",
+        back_to_articles: "← Volver a los artículos",
+        share_heading: "Compartir"
+      },
+      it: {
+        emb_title: "Da One-Hot a Contestuale: Guida Pratica agli Embedding di Testo",
+        emb_category: "NLP",
+        emb_p1: "Gli embedding di testo sono le fondamenta dell’NLP moderno. Trasformano il linguaggio umano in vettori numerici che le macchine possono elaborare. Comprendere questa evoluzione — da rappresentazioni sparse a vettori densi contestuali — è essenziale per qualsiasi professionista che costruisce sistemi di produzione.",
+        emb_h1: "L’Evoluzione: Tre Generazioni di Embedding",
+        emb_p2: "Bag-of-Words (BoW) rappresenta l’approccio più semplice: contare le frequenze delle parole, ignorare l’ordine. Un vocabolario di 50.000 parole produce un vettore sparso di 50.000 dimensioni. Implementalo in cinque righe con CountVectorizer, ma attenzione all’esplosione di memoria con documenti grandi. BoW tratta “buono” e “ottimo” come caratteristiche indipendenti — perdendo completamente le relazioni semantiche.",
+        emb_p3: "TF-IDF migliora BoW pesando i termini in base alla loro importanza. Le parole che compaiono in molti documenti vengono penalizzate; le parole rare ma informative vengono valorizzate. Questo semplice cambiamento migliora drasticamente le prestazioni di recupero. Implementalo con TfidfVectorizer e vedrai risultati migliori nella maggior parte dei compiti di classificazione.",
+        emb_p4: "Word2Vec rappresenta un cambio di paradigma. Usando l’architettura Skip-gram, apprende vettori densi a 300 dimensioni dove le parole semanticamente simili si raggruppano. “Re - uomo + donna ≈ regina” divenne la dimostrazione iconica. L’intuizione chiave: le parole che compaiono in contesti simili hanno significati simili.",
+        emb_p5: "Gli Embedding Contestuali sono finalmente arrivati con BERT nel 2018. A differenza dei vettori statici di Word2Vec, BERT genera rappresentazioni diverse per la stessa parola a seconda del contesto. “Banca” in “banca del fiume” differisce da “banca” in “banca finanziaria” — una distinzione che gli embedding statici non possono mai catturare.",
+        emb_h2: "Implementazione Pratica",
+        emb_p6: "Caricare embedding preaddestrati è semplice. Per GloVe, scarica i vettori a 300 dimensioni e costruisci un semplice dizionario di ricerca. Per FastText, usa fasttext.load_model() per ottenere informazioni sulle sottoparole che gestiscono elegantemente le parole fuori vocabolario.",
+        emb_p7: "Costruire un classificatore di sentimenti usando embedding è istruttivo: calcola la media dei vettori delle parole in ogni documento e addestra un classificatore di regressione logistica sopra. Vedrai che GloVe supera TF-IDF nei compiti semantici ma ha difficoltà con termini specifici del dominio.",
+        emb_h3: "Visualizzare gli Spazi di Embedding",
+        emb_p8: "La proiezione t-SNE rivela la struttura: le parole semanticamente correlate si raggruppano, le dimensioni catturano caratteristiche sorprendentemente interpretabili e la visualizzazione valida immediatamente se i tuoi embedding hanno appreso relazioni significative.",
+        emb_h4: "Il Gap di Ricerca",
+        emb_p9: "Gli embedding statici sono un problema risolto. Ma il dibattito tra embedding open-source e proprietari resta aperto. I modelli commerciali come text-embedding-3-small e text-embedding-3-large di OpenAI superano costantemente le alternative aperte nei benchmark MTEB, ma a un costo significativo. Il compromesso non è solo la precisione — riguarda la privacy dei dati, i requisiti di latenza e le capacità di fine-tuning.",
+        emb_p10: "Quando conviene pagare per embedding proprietari rispetto a ospitare modelli aperti? L’esperienza in produzione suggerisce: usa quelli proprietari per applicazioni rivolte ai clienti dove la precisione impatta direttamente sui ricavi, e quelli open-source per strumenti interni dove il costo scala con il volume delle query. Ma una guida sistematica manca.",
+        back_to_articles: "← Torna agli articoli",
+        share_heading: "Condividi"
+      },
+      pt: {
+        emb_title: "De One-Hot a Contextual: Guia Prático de Embeddings de Texto",
+        emb_category: "PLN",
+        emb_p1: "Os embeddings de texto são a base do PLN moderno. Eles transformam a linguagem humana em vetores numéricos que as máquinas podem processar. Compreender essa evolução — de representações esparsas a vetores densos contextuais — é essencial para qualquer profissional que constrói sistemas de produção.",
+        emb_h1: "A Evolução: Três Gerações de Embeddings",
+        emb_p2: "Bag-of-Words (BoW) representa a abordagem mais simples: contar frequências de palavras, ignorar a ordem. Um vocabulário de 50.000 palavras produz um vetor esparso de 50.000 dimensões. Implemente em cinco linhas com CountVectorizer, mas cuidado com a explosão de memória à medida que os documentos crescem. BoW trata “bom” e “ótimo” como características independentes — perdendo relações semânticas por completo.",
+        emb_p3: "TF-IDF melhora o BoW ponderando termos com base em sua importância. Palavras que aparecem em muitos documentos são penalizadas; palavras raras mas informativas recebem mais peso. Essa mudança simples melhora dramaticamente o desempenho de recuperação. Implemente com TfidfVectorizer e você verá melhores resultados na maioria das tarefas de classificação.",
+        emb_p4: "Word2Vec representa uma mudança de paradigma. Usando a arquitetura Skip-gram, aprende vetores densos de 300 dimensões onde palavras semanticamente similares se agrupam. “Rei - homem + mulher ≈ rainha” tornou-se a demonstração icônica. A ideia-chave: palavras que aparecem em contextos similares têm significados similares.",
+        emb_p5: "Os Embeddings Contextuais finalmente chegaram com o BERT em 2018. Diferente dos vetores estáticos do Word2Vec, o BERT gera representações diferentes para a mesma palavra dependendo do contexto. “Banco” em “banco do rio” difere de “banco” em “banco financeiro” — uma distinção que embeddings estáticos nunca conseguem capturar.",
+        emb_h2: "Implementação Prática",
+        emb_p6: "Carregar embeddings pré-treinados é simples. Para GloVe, baixe os vetores de 300 dimensões e construa um dicionário de busca simples. Para FastText, use fasttext.load_model() para obter informações de subpalavras que lidam elegantemente com palavras fora do vocabulário.",
+        emb_p7: "Construir um classificador de sentimentos usando embeddings é educativo: calcule a média dos vetores de palavras em cada documento e treine um classificador de regressão logística em cima. Você verá que GloVe supera TF-IDF em tarefas semânticas mas tem dificuldades com termos específicos do domínio.",
+        emb_h3: "Visualizando Espaços de Embeddings",
+        emb_p8: "A projeção t-SNE revela a estrutura: palavras semanticamente relacionadas se agrupam, dimensões capturam características surpreendentemente interpretáveis e a visualização valida imediatamente se seus embeddings aprenderam relações significativas.",
+        emb_h4: "A Lacuna de Pesquisa",
+        emb_p9: "Embeddings estáticos estão resolvidos. Mas o debate entre embeddings de código aberto e proprietários permanece em aberto. Modelos comerciais como text-embedding-3-small e text-embedding-3-large da OpenAI superam consistentemente alternativas abertas nos benchmarks MTEB, mas a um custo significativo. A compensação não é apenas precisão — trata-se de privacidade de dados, requisitos de latência e capacidades de fine-tuning.",
+        emb_p10: "Quando você deve pagar por embeddings proprietários versus hospedar modelos abertos? A experiência em produção sugere: use proprietários para aplicações voltadas ao cliente onde a precisão impacta diretamente a receita, e de código aberto para ferramentas internas onde o custo escala com o volume de consultas. Mas orientação sistemática é insuficiente.",
+        back_to_articles: "← Voltar aos artigos",
+        share_heading: "Compartilhar"
+      }
+    });
+    window.i18nApply();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="Zero-shot, one-shot, and few-shot prompting patterns — how in-context learning works, when each strategy wins, and how to build a systematic comparison framework." />
+  <meta name="author" content="P. Antonio Granados" />
+
+  <meta property="og:title" content="In-Context Learning Demystified: Zero, One, and Few-Shot Patterns" />
+  <meta property="og:description" content="Zero-shot, one-shot, and few-shot prompting patterns — how in-context learning works and how to build a systematic comparison framework." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://saalamandras.github.io/portafolio/articles/in-context-learning-demystified.html" />
+  <meta property="og:image" content="https://saalamandras.github.io/portafolio/images/Profile_Picture_2026.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="In-Context Learning Demystified: Zero, One, and Few-Shot Patterns" />
+  <meta name="twitter:description" content="Zero-shot, one-shot, and few-shot prompting patterns — how in-context learning works and how to build a systematic comparison framework." />
+  <meta name="twitter:image" content="https://saalamandras.github.io/portafolio/images/Profile_Picture_2026.png" />
+
+  <link rel="canonical" href="https://saalamandras.github.io/portafolio/articles/in-context-learning-demystified.html" />
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        referrerpolicy="no-referrer" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <title>In-Context Learning Demystified | P. Antonio Granados</title>
+</head>
+
+<body class="blueprint-bg">
+
+  <header>
+    <nav aria-label="Main navigation">
+      <a href="../index.html" class="nav-brand">P. Antonio Granados</a>
+      <ul>
+        <li><a href="../index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+        <li><a href="../projects.html" class="nav-link" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="../articles.html" class="nav-link" aria-current="page" data-i18n="nav_articles">Articles</a></li>
+        <li><a href="../contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div id="lang-switcher" role="group" aria-label="Language switcher">
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        <button type="button" class="lang-btn" data-lang="it" aria-pressed="false">IT</button>
+        <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
+      </div>
+      <button class="theme-toggle" aria-label="Switch to light mode">[ LIGHT ]</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <article class="post">
+
+      <header class="post-header">
+        <h1 data-i18n="icl_title">In-Context Learning Demystified: Zero, One, and Few-Shot Patterns</h1>
+        <p class="post-meta">
+          <time datetime="2026-07-11">July 11, 2026</time>
+          &middot;
+          <span class="post-category" data-i18n="icl_category">Prompt Engineering</span>
+        </p>
+      </header>
+
+      <div class="post-body">
+
+        <p data-i18n="icl_p1">In-context learning is arguably the most powerful capability unlocked by large language models. The ability to teach a model a new task simply by showing examples — without updating a single weight — transforms how we build AI applications. But behind this apparent simplicity lies a complex design space that separates effective systems from brittle ones.</p>
+
+        <h2 data-i18n="icl_h1">The Prompting Spectrum</h2>
+
+        <p data-i18n="icl_p2">Zero-shot prompting asks the model to perform a task with no examples. The prompt relies entirely on the model's pretraining knowledge: "Classify this review as positive or negative." Performance hinges on how well the pretraining data covers the task domain. Simple tasks like sentiment analysis work reasonably well; complex reasoning tasks often fail.</p>
+
+        <p data-i18n="icl_p3">One-shot prompting provides a single example before the test input. This tiny bit of context dramatically improves performance on structured tasks by establishing output format, demonstrating the expected reasoning pattern, and signaling the task domain. Formatting becomes more reliable when the model sees an example.</p>
+
+        <p data-i18n="icl_p4">Few-shot prompting typically uses 3-8 examples. Performance often improves up to a point — then plateaus or degrades. The examples create a pattern that the model follows, effectively implementing a simple learning algorithm through attention mechanisms.</p>
+
+        <h2 data-i18n="icl_h2">Building a Systematic Comparison Framework</h2>
+
+        <p data-i18n="icl_p5">Designing systematic comparisons requires controlling variables. Keep the prompt template identical across all conditions, use the exact same test examples, and run multiple trials to account for generation variance. The key metrics: accuracy, consistency across different seeds, and sensitivity to example ordering.</p>
+
+        <pre><code># Pseudocode for systematic comparison
+configs = {
+    'zero_shot': {'num_examples': 0, 'template': 'zero_shot.j2'},
+    'one_shot': {'num_examples': 1, 'template': 'few_shot.j2'},
+    'few_shot_3': {'num_examples': 3, 'template': 'few_shot.j2'}
+}
+
+results = {}
+for config in configs:
+    results[config] = evaluate(prompt_template, examples, test_set)</code></pre>
+
+        <h2 data-i18n="icl_h3">The Modular Prompt Library</h2>
+
+        <p data-i18n="icl_p6">Building a prompt library using Jinja2 templating separates content from structure. Define reusable templates for each task type, parameterize the number of examples, and maintain versioned templates. This approach makes experimentation reproducible and team collaboration smoother.</p>
+
+        <pre><code>{# few_shot.j2 #}
+You are a {{ role }}. Classify the following text.
+
+{% for example in examples %}
+Input: {{ example.text }}
+Output: {{ example.label }}
+{% endfor %}
+
+Input: {{ test_text }}
+Output:</code></pre>
+
+        <h2 data-i18n="icl_h4">Example Selection Strategies</h2>
+
+        <p data-i18n="icl_p7">Random selection is the baseline but performs poorly. k-NN selection chooses examples semantically closest to the test input using embedding similarity. Semantic similarity selection uses the same approach but with a different distance metric. Recent research shows that selecting diverse examples often outperforms simply choosing the most similar ones.</p>
+
+        <h2 data-i18n="icl_h5">The Research Gap That Matters</h2>
+
+        <p data-i18n="icl_p8">The field desperately needs guidance on automated example selection. Should selection optimize for diversity, relevance, or both? Does the optimal strategy vary by task type? How many examples are truly necessary? Current approaches remain heuristic-driven. Until we have systematic benchmarking, practitioners must experiment with each new task — a costly and unscalable process.</p>
+
+      </div>
+
+      <div class="share-bar"
+           data-share-url="https://saalamandras.github.io/portafolio/articles/in-context-learning-demystified.html"
+           data-share-title="In-Context Learning Demystified"
+           aria-label="Share this article">
+
+        <h2 class="share-heading" data-i18n="share_heading">Share this</h2>
+
+        <button type="button" id="native-share" class="share-button share-native" aria-label="Share via your device">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>Share</span>
+        </button>
+
+        <a href="#" class="share-button share-x" target="_blank" rel="noopener noreferrer" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="share-button share-linkedin" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" class="share-button share-reddit" target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit"><i class="fa-brands fa-reddit"></i></a>
+        <a href="#" class="share-button share-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" class="share-button share-telegram" target="_blank" rel="noopener noreferrer" aria-label="Share on Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#" class="share-button share-facebook" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+
+      <a href="../articles.html" class="back-link" data-i18n="back_to_articles">&larr; Back to all articles</a>
+
+    </article>
+
+  </main>
+
+  <footer>
+    <p>
+      &copy; 2026 P. Antonio Granados &mdash;
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
+      <span data-i18n="footer_location">Mestre (VE), Italy</span>
+    </p>
+  </footer>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/share.js"></script>
+
+  <script>
+    window.i18nRegister({
+      en: {
+        icl_title: "In-Context Learning Demystified: Zero, One, and Few-Shot Patterns",
+        icl_category: "Prompt Engineering",
+        icl_p1: "In-context learning is arguably the most powerful capability unlocked by large language models. The ability to teach a model a new task simply by showing examples — without updating a single weight — transforms how we build AI applications. But behind this apparent simplicity lies a complex design space that separates effective systems from brittle ones.",
+        icl_h1: "The Prompting Spectrum",
+        icl_p2: "Zero-shot prompting asks the model to perform a task with no examples. The prompt relies entirely on the model’s pretraining knowledge: “Classify this review as positive or negative.” Performance hinges on how well the pretraining data covers the task domain. Simple tasks like sentiment analysis work reasonably well; complex reasoning tasks often fail.",
+        icl_p3: "One-shot prompting provides a single example before the test input. This tiny bit of context dramatically improves performance on structured tasks by establishing output format, demonstrating the expected reasoning pattern, and signaling the task domain. Formatting becomes more reliable when the model sees an example.",
+        icl_p4: "Few-shot prompting typically uses 3-8 examples. Performance often improves up to a point — then plateaus or degrades. The examples create a pattern that the model follows, effectively implementing a simple learning algorithm through attention mechanisms.",
+        icl_h2: "Building a Systematic Comparison Framework",
+        icl_p5: "Designing systematic comparisons requires controlling variables. Keep the prompt template identical across all conditions, use the exact same test examples, and run multiple trials to account for generation variance. The key metrics: accuracy, consistency across different seeds, and sensitivity to example ordering.",
+        icl_h3: "The Modular Prompt Library",
+        icl_p6: "Building a prompt library using Jinja2 templating separates content from structure. Define reusable templates for each task type, parameterize the number of examples, and maintain versioned templates. This approach makes experimentation reproducible and team collaboration smoother.",
+        icl_h4: "Example Selection Strategies",
+        icl_p7: "Random selection is the baseline but performs poorly. k-NN selection chooses examples semantically closest to the test input using embedding similarity. Semantic similarity selection uses the same approach but with a different distance metric. Recent research shows that selecting diverse examples often outperforms simply choosing the most similar ones.",
+        icl_h5: "The Research Gap That Matters",
+        icl_p8: "The field desperately needs guidance on automated example selection. Should selection optimize for diversity, relevance, or both? Does the optimal strategy vary by task type? How many examples are truly necessary? Current approaches remain heuristic-driven. Until we have systematic benchmarking, practitioners must experiment with each new task — a costly and unscalable process.",
+        back_to_articles: "← Back to all articles",
+        share_heading: "Share this"
+      },
+      es: {
+        icl_title: "Aprendizaje en Contexto Desmitificado: Patrones Zero, One y Few-Shot",
+        icl_category: "Ingeniería de Prompts",
+        icl_p1: "El aprendizaje en contexto es posiblemente la capacidad más poderosa desbloqueada por los grandes modelos de lenguaje. La capacidad de enseñar a un modelo una nueva tarea simplemente mostrando ejemplos — sin actualizar un solo peso — transforma cómo construimos aplicaciones de IA. Pero detrás de esta aparente simplicidad se esconde un espacio de diseño complejo que separa los sistemas eficaces de los frágiles.",
+        icl_h1: "El Espectro del Prompting",
+        icl_p2: "El prompting zero-shot pide al modelo que realice una tarea sin ejemplos. El prompt se basa enteramente en el conocimiento de preentrenamiento del modelo: «Clasifica esta reseña como positiva o negativa.» El rendimiento depende de cuán bien los datos de preentrenamiento cubren el dominio de la tarea. Tareas simples como el análisis de sentimiento funcionan razonablemente bien; las tareas de razonamiento complejo a menudo fallan.",
+        icl_p3: "El prompting one-shot proporciona un único ejemplo antes de la entrada de prueba. Este pequeño fragmento de contexto mejora drásticamente el rendimiento en tareas estructuradas al establecer el formato de salida, demostrar el patrón de razonamiento esperado y señalar el dominio de la tarea. El formato se vuelve más fiable cuando el modelo ve un ejemplo.",
+        icl_p4: "El prompting few-shot utiliza típicamente 3-8 ejemplos. El rendimiento suele mejorar hasta cierto punto — luego se estanca o degrada. Los ejemplos crean un patrón que el modelo sigue, implementando efectivamente un algoritmo de aprendizaje simple a través de mecanismos de atención.",
+        icl_h2: "Construyendo un Marco de Comparación Sistemática",
+        icl_p5: "Diseñar comparaciones sistemáticas requiere controlar variables. Mantener la plantilla del prompt idéntica en todas las condiciones, usar los mismos ejemplos de prueba y ejecutar múltiples ensayos para tener en cuenta la varianza de generación. Las métricas clave: precisión, consistencia entre diferentes semillas y sensibilidad al orden de los ejemplos.",
+        icl_h3: "La Biblioteca Modular de Prompts",
+        icl_p6: "Construir una biblioteca de prompts usando plantillas Jinja2 separa el contenido de la estructura. Define plantillas reutilizables para cada tipo de tarea, parametriza el número de ejemplos y mantén plantillas versionadas. Este enfoque hace la experimentación reproducible y la colaboración en equipo más fluida.",
+        icl_h4: "Estrategias de Selección de Ejemplos",
+        icl_p7: "La selección aleatoria es la línea base pero funciona mal. La selección k-NN elige ejemplos semánticamente más cercanos a la entrada de prueba usando similitud de embeddings. La selección por similitud semántica usa el mismo enfoque pero con una métrica de distancia diferente. Investigaciones recientes muestran que seleccionar ejemplos diversos a menudo supera a simplemente elegir los más similares.",
+        icl_h5: "La Brecha de Investigación que Importa",
+        icl_p8: "El campo necesita desesperadamente orientación sobre la selección automatizada de ejemplos. ¿Debe la selección optimizar la diversidad, la relevancia o ambas? ¿Varía la estrategia óptima según el tipo de tarea? ¿Cuántos ejemplos son realmente necesarios? Los enfoques actuales siguen siendo heurísticos. Hasta que tengamos benchmarks sistemáticos, los profesionales deben experimentar con cada nueva tarea — un proceso costoso y no escalable.",
+        back_to_articles: "← Volver a los artículos",
+        share_heading: "Compartir"
+      },
+      it: {
+        icl_title: "Apprendimento in Contesto Demistificato: Pattern Zero, One e Few-Shot",
+        icl_category: "Prompt Engineering",
+        icl_p1: "L’apprendimento in contesto è probabilmente la capacità più potente sbloccata dai grandi modelli di linguaggio. La possibilità di insegnare a un modello un nuovo compito semplicemente mostrando esempi — senza aggiornare un singolo peso — trasforma il modo in cui costruiamo applicazioni di IA. Ma dietro questa apparente semplicità si nasconde uno spazio di progettazione complesso che separa i sistemi efficaci da quelli fragili.",
+        icl_h1: "Lo Spettro del Prompting",
+        icl_p2: "Il prompting zero-shot chiede al modello di eseguire un compito senza esempi. Il prompt si basa interamente sulla conoscenza di preaddestramento del modello: «Classifica questa recensione come positiva o negativa.» Le prestazioni dipendono da quanto bene i dati di preaddestramento coprono il dominio del compito. Compiti semplici come l’analisi del sentiment funzionano ragionevolmente bene; compiti di ragionamento complesso spesso falliscono.",
+        icl_p3: "Il prompting one-shot fornisce un singolo esempio prima dell’input di test. Questo piccolo frammento di contesto migliora drasticamente le prestazioni su compiti strutturati stabilendo il formato di output, dimostrando il pattern di ragionamento atteso e segnalando il dominio del compito. La formattazione diventa più affidabile quando il modello vede un esempio.",
+        icl_p4: "Il prompting few-shot utilizza tipicamente 3-8 esempi. Le prestazioni spesso migliorano fino a un certo punto — poi si stabilizzano o degradano. Gli esempi creano un pattern che il modello segue, implementando effettivamente un semplice algoritmo di apprendimento attraverso meccanismi di attenzione.",
+        icl_h2: "Costruire un Framework di Confronto Sistematico",
+        icl_p5: "Progettare confronti sistematici richiede il controllo delle variabili. Mantenere il template del prompt identico in tutte le condizioni, usare gli stessi esatti esempi di test ed eseguire più prove per tenere conto della varianza di generazione. Le metriche chiave: accuratezza, consistenza tra diversi seed e sensibilità all’ordine degli esempi.",
+        icl_h3: "La Libreria Modulare di Prompt",
+        icl_p6: "Costruire una libreria di prompt usando il templating Jinja2 separa il contenuto dalla struttura. Definisci template riutilizzabili per ogni tipo di compito, parametrizza il numero di esempi e mantieni template versionati. Questo approccio rende la sperimentazione riproducibile e la collaborazione di team più fluida.",
+        icl_h4: "Strategie di Selezione degli Esempi",
+        icl_p7: "La selezione casuale è la baseline ma funziona male. La selezione k-NN sceglie esempi semanticamente più vicini all’input di test usando la similarità degli embedding. La selezione per similarità semantica usa lo stesso approccio ma con una metrica di distanza diversa. Ricerche recenti mostrano che selezionare esempi diversi spesso supera il semplice scegliere quelli più simili.",
+        icl_h5: "Il Gap di Ricerca che Conta",
+        icl_p8: "Il campo ha disperatamente bisogno di orientamento sulla selezione automatizzata degli esempi. La selezione deve ottimizzare la diversità, la rilevanza o entrambe? La strategia ottimale varia per tipo di compito? Quanti esempi sono veramente necessari? Gli approcci attuali restano euristici. Finché non avremo benchmarking sistematico, i professionisti devono sperimentare con ogni nuovo compito — un processo costoso e non scalabile.",
+        back_to_articles: "← Torna agli articoli",
+        share_heading: "Condividi"
+      },
+      pt: {
+        icl_title: "Aprendizado em Contexto Desmistificado: Padrões Zero, One e Few-Shot",
+        icl_category: "Engenharia de Prompts",
+        icl_p1: "O aprendizado em contexto é possivelmente a capacidade mais poderosa desbloqueada pelos grandes modelos de linguagem. A capacidade de ensinar a um modelo uma nova tarefa simplesmente mostrando exemplos — sem atualizar um único peso — transforma como construímos aplicações de IA. Mas por trás dessa aparente simplicidade existe um espaço de design complexo que separa sistemas eficazes de frágeis.",
+        icl_h1: "O Espectro do Prompting",
+        icl_p2: "O prompting zero-shot pede ao modelo que execute uma tarefa sem exemplos. O prompt depende inteiramente do conhecimento de pré-treinamento do modelo: “Classifique esta avaliação como positiva ou negativa.” O desempenho depende de quão bem os dados de pré-treinamento cobrem o domínio da tarefa. Tarefas simples como análise de sentimento funcionam razoavelmente bem; tarefas de raciocínio complexo frequentemente falham.",
+        icl_p3: "O prompting one-shot fornece um único exemplo antes da entrada de teste. Esse pequeno fragmento de contexto melhora dramaticamente o desempenho em tarefas estruturadas ao estabelecer o formato de saída, demonstrar o padrão de raciocínio esperado e sinalizar o domínio da tarefa. A formatação se torna mais confiável quando o modelo vê um exemplo.",
+        icl_p4: "O prompting few-shot tipicamente usa 3-8 exemplos. O desempenho frequentemente melhora até certo ponto — então estabiliza ou degrada. Os exemplos criam um padrão que o modelo segue, efetivamente implementando um algoritmo de aprendizado simples através de mecanismos de atenção.",
+        icl_h2: "Construindo um Framework de Comparação Sistemática",
+        icl_p5: "Projetar comparações sistemáticas requer controlar variáveis. Manter o template do prompt idêntico em todas as condições, usar os mesmos exemplos de teste e executar múltiplas tentativas para considerar a variância de geração. As métricas-chave: precisão, consistência entre diferentes seeds e sensibilidade à ordenação dos exemplos.",
+        icl_h3: "A Biblioteca Modular de Prompts",
+        icl_p6: "Construir uma biblioteca de prompts usando templates Jinja2 separa conteúdo de estrutura. Defina templates reutilizáveis para cada tipo de tarefa, parametrize o número de exemplos e mantenha templates versionados. Essa abordagem torna a experimentação reproduzível e a colaboração em equipe mais fluida.",
+        icl_h4: "Estratégias de Seleção de Exemplos",
+        icl_p7: "A seleção aleatória é a linha de base mas funciona mal. A seleção k-NN escolhe exemplos semanticamente mais próximos da entrada de teste usando similaridade de embeddings. A seleção por similaridade semântica usa a mesma abordagem mas com uma métrica de distância diferente. Pesquisas recentes mostram que selecionar exemplos diversos frequentemente supera simplesmente escolher os mais similares.",
+        icl_h5: "A Lacuna de Pesquisa que Importa",
+        icl_p8: "O campo precisa desesperadamente de orientação sobre seleção automatizada de exemplos. A seleção deve otimizar diversidade, relevância ou ambas? A estratégia ótima varia por tipo de tarefa? Quantos exemplos são realmente necessários? As abordagens atuais permanecem heurísticas. Até termos benchmarking sistemático, os profissionais devem experimentar com cada nova tarefa — um processo custoso e não escalável.",
+        back_to_articles: "← Voltar aos artigos",
+        share_heading: "Compartilhar"
+      }
+    });
+    window.i18nApply();
+  </script>
+
+</body>
+</html>
