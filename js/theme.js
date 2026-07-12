@@ -29,7 +29,7 @@
     /* Update every toggle button on the page (there should only be one,
        but this handles edge cases cleanly) */
     document.querySelectorAll(".theme-toggle").forEach(function (btn) {
-      btn.textContent = theme === "light" ? "[ DARK ]" : "[ LIGHT ]";
+      btn.textContent = theme === "light" ? "🌙" : "☀️";
       btn.setAttribute("aria-label", theme === "light" ? "Switch to dark mode" : "Switch to light mode");
     });
   }

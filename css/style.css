@@ -384,19 +384,16 @@ nav ul {
 /* Theme toggle button — styled to match the retro nav aesthetic */
 .theme-toggle {
   background: none;
-  border: 1px solid var(--border-accent);
-  padding: 3px 7px;
+  border: none;
+  padding: 4px;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 9px;
-  color: var(--text-muted);
-  letter-spacing: .08em;
-  transition: color 0.2s, border-color 0.2s;
+  font-size: 22px;
+  line-height: 1;
+  transition: transform 0.2s ease;
 }
 
 .theme-toggle:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  transform: scale(1.2);
 }
 
 /* --- Nav social icons --- */
