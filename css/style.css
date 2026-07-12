@@ -379,6 +379,43 @@ nav a[aria-current="page"] {
   border-color: var(--accent);
 }
 
+/* --- Nav social icons --- */
+.nav-social {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+.nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-faint);
+  border-radius: 4px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 15px;
+}
+
+.nav-icon:hover {
+  background: var(--surface-alt);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* --- Hero grid --- */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 40px;
+  align-items: center;
+}
+
 /* ============================================================
    MAIN CONTENT
    ============================================================ */
@@ -765,6 +802,12 @@ footer {
   color: var(--text-muted);
 }
 
+footer p {
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 footer a {
   color: var(--accent);
   text-decoration: none;
@@ -773,6 +816,32 @@ footer a {
 
 footer a:hover {
   color: var(--accent-alt);
+}
+
+.footer-social {
+  margin-bottom: 16px;
+}
+
+.footer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-faint);
+  border-radius: 4px;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin: 0 6px;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.footer-icon:hover {
+  background: var(--surface-alt);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
 }
 
 .bracket-frame {
@@ -846,6 +915,32 @@ footer a:hover {
     gap: 12px;
   }
 
+  .nav-social {
+    justify-content: center;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-grid .viewfinder-frame {
+    justify-self: center;
+    order: -1;
+  }
+
+  .hero-grid .cta-button {
+    display: inline-block;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
   .btn-primary,
   .btn-secondary {
     width: 100%;
@@ -867,5 +962,15 @@ footer a:hover {
     width: 100%;
     max-width: 240px;
     margin: 0 auto;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  #lang-switcher {
+    justify-content: center;
   }
 }

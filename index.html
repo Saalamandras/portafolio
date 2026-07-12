@@ -30,6 +30,13 @@
   <link rel="alternate" hreflang="it" href="https://saalamandras.github.io/portafolio/" />
   <link rel="alternate" hreflang="pt" href="https://saalamandras.github.io/portafolio/" />
 
+  <!-- Font Awesome icons (social links in footer) -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3w=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+
   <!-- Browser tab title -->
   <title>P. Antonio Granados — AI & NLP Engineer</title>
 </head>
@@ -64,6 +71,13 @@
       <!-- Theme toggle — label is set dynamically by theme.js on load -->
       <button class="theme-toggle" aria-label="Switch to light mode">[ LIGHT ]</button>
 
+      <!-- Social links -->
+      <div class="nav-social" aria-label="Social links">
+        <a href="https://github.com/Saalamandras" class="nav-icon" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="https://x.com/Apocrifos" class="nav-icon" target="_blank" rel="noopener noreferrer" aria-label="X (formerly Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://www.linkedin.com/in/antonio-granados-v/" class="nav-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+
     </nav>
 
   </header>
@@ -72,7 +86,7 @@
   <main>
 
     <!-- HERO: the first thing a visitor sees. Headline + avatar, side by side -->
-    <section id="hero" aria-labelledby="hero-heading" data-animate style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:40px;align-items:center;">
+    <section id="hero" class="hero-grid" aria-labelledby="hero-heading" data-animate>
       <div>
         <p class="eyebrow" style="margin:0 0 18px;" data-i18n="hero_subtitle">Prompt Engineer · Computational Linguist · Multilingual AI Developer</p>
         <h1 class="headline" id="hero-heading" data-i18n="hero_title" data-typewriter>AI &amp; NLP Engineer</h1>
@@ -169,8 +183,8 @@
   <!-- FOOTER: site-wide. Will be identical on all pages -->
   <footer>
     <p class="body-text">
-      &copy; 2026 P. Antonio Granados &mdash; 
-      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash; 
+      &copy; 2026 P. Antonio Granados &mdash;
+      <a href="mailto:antonio.granados@protonmail.com">antonio.granados@protonmail.com</a> &mdash;
       Mestre (VE), Italy
     </p>
   </footer>
