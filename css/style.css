@@ -345,36 +345,40 @@ nav ul {
 }
 
 #lang-switcher {
-  font-size: 10px;
-  color: var(--text-muted);
   white-space: nowrap;
   display: flex;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
 }
 
-/* Reset browser button defaults so lang buttons look like plain text */
 .lang-btn {
-  background: none;
+  background: #1a7fb5;
   border: none;
-  padding: 2px 4px;
+  padding: 8px 14px;
   cursor: pointer;
   font-family: inherit;
-  font-size: 10px;
-  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
   letter-spacing: .05em;
-  transition: color 0.2s;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 3px 3px 0 color-mix(in oklch, #1a7fb5 40%, black), 0 6px 14px rgba(0,0,0,.5);
 }
 
 .lang-btn:hover {
-  color: var(--accent);
+  background: #2298d4;
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 color-mix(in oklch, #1a7fb5 40%, black), 0 8px 18px rgba(0,0,0,.5);
 }
 
-/* Active language: highlighted in accent colour with an underline */
+.lang-btn:active {
+  box-shadow: 1px 1px 0 color-mix(in oklch, #1a7fb5 40%, black), 0 2px 6px rgba(0,0,0,.4);
+  transform: translate(2px, 2px);
+}
+
 .lang-btn[aria-pressed="true"] {
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  background: #2298d4;
 }
 
 /* Theme toggle button — styled to match the retro nav aesthetic */
