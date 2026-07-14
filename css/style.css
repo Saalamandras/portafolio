@@ -196,7 +196,7 @@ html {
   font-size: 14.5px;
   line-height: 1.75;
   color: var(--text-body);
-  max-width: 480px;
+  max-width: 100%;
 }
 
 /* Nav links */
@@ -899,6 +899,144 @@ footer a:hover {
   border-bottom: 2px solid var(--accent);
   border-right: 2px solid var(--accent);
 }
+/* ------------------------------------------------------------------
+   EXPERIENCE TIMELINE
+   Vertical line on the left with cards branching off to the right.
+   ------------------------------------------------------------------ */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+  margin-top: 32px;
+}
+
+/* Vertical line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-accent);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 36px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Dot on the line */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+  z-index: 1;
+}
+
+.timeline-card {
+  background: var(--surface);
+  border: 1px solid var(--border-faint);
+  border-radius: 6px;
+  padding: 24px 28px;
+  transition: border-color 0.2s ease;
+}
+
+.timeline-card:hover {
+  border-color: var(--accent);
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.timeline-role {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-headline);
+}
+
+.timeline-date {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.timeline-company {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.timeline-desc {
+  color: var(--text-body);
+  font-size: 15px;
+  line-height: 1.7;
+  width: 100%;
+}
+
+.timeline-desc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.timeline-desc ul li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  text-align: justify;
+}
+
+.timeline-desc ul li:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-desc ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+/* Mobile: tighten the timeline */
+@media (max-width: 768px) {
+  .timeline {
+    padding-left: 24px;
+  }
+  .timeline-item::before {
+    left: -24px;
+    width: 12px;
+    height: 12px;
+  }
+  .timeline::before {
+    left: 5px;
+  }
+  .timeline-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
 .btn-pressable {
   box-shadow: 4px 4px 0 color-mix(in oklch, var(--accent) 40%, black), 0 8px 18px rgba(0,0,0,.5);
   transition: box-shadow .08s ease, transform .08s ease;
