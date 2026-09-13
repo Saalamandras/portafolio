@@ -11,9 +11,9 @@
 
 const ALLOWED_ORIGIN = 'https://saalamandras.github.io';
 
-// gemini-1.5-flash was retired by Google; gemini-2.0-flash is the current
+// gemini-1.5-flash was retired by Google; gemini-3.6-flash is the current
 // free-tier default. Swap to 'gemini-2.5-flash' or 'gemini-flash-latest' if needed.
-const GEMINI_MODEL = 'gemini-2.0-flash';
+const GEMINI_MODEL = 'gemini-3.6-flash';
 
 const MAX_INPUT_CHARS = 2000;   // reject anything longer (abuse / cost guard)
 const MAX_OUTPUT_TOKENS = 400;  // keep replies short and cheap
