@@ -11,8 +11,9 @@
 
 const ALLOWED_ORIGIN = 'https://saalamandras.github.io';
 
-// If gemini-1.5-flash is ever retired, swap this for e.g. 'gemini-2.0-flash'.
-const GEMINI_MODEL = 'gemini-1.5-flash';
+// gemini-1.5-flash was retired by Google; gemini-2.0-flash is the current
+// free-tier default. Swap to 'gemini-2.5-flash' or 'gemini-flash-latest' if needed.
+const GEMINI_MODEL = 'gemini-2.0-flash';
 
 const MAX_INPUT_CHARS = 2000;   // reject anything longer (abuse / cost guard)
 const MAX_OUTPUT_TOKENS = 400;  // keep replies short and cheap
@@ -135,7 +136,10 @@ export default async function handler(req, res) {
   }
 
   // 5. Validate input
-  const { message, history } = req.body || {};
+  const { message, history, debug } = req.body || {};
+  // TEMPORARY: when { debug: true } is sent, upstream Gemini errors are echoed
+  // back to help diagnose model/key issues. Remove once the bot is confirmed.
+  const wantDebug = debug === true;
   if (typeof message !== 'string' || !message.trim()) {
     return res.status(400).json({ error: 'Missing "message" parameter in request body.' });
   }
@@ -170,7 +174,10 @@ export default async function handler(req, res) {
     if (!geminiRes.ok) {
       const detail = await geminiRes.text().catch(() => '');
       console.error(`Gemini API error ${geminiRes.status}:`, detail);
-      return res.status(502).json({ error: 'The assistant is temporarily unavailable. Please try again.' });
+      return res.status(502).json({
+        error: 'The assistant is temporarily unavailable. Please try again.',
+        ...(wantDebug ? { debug: { model: GEMINI_MODEL, upstreamStatus: geminiRes.status, upstreamBody: detail.slice(0, 600) } } : {}),
+      });
     }
 
     const data = await geminiRes.json();
