@@ -11,12 +11,12 @@
 
 const ALLOWED_ORIGIN = 'https://saalamandras.github.io';
 
-// gemini-1.5-flash was retired by Google; gemini-3.6-flash is the current
-// free-tier default. Swap to 'gemini-2.5-flash' or 'gemini-flash-latest' if needed.
+// Current Gemini flash model (Sept 2026). The API retires older names over time
+// and reports the successor in its 404 body — check the debug output if it 404s.
 const GEMINI_MODEL = 'gemini-3.6-flash';
 
 const MAX_INPUT_CHARS = 2000;   // reject anything longer (abuse / cost guard)
-const MAX_OUTPUT_TOKENS = 400;  // keep replies short and cheap
+const MAX_OUTPUT_TOKENS = 700;  // keep replies short and cheap, but avoid mid-word cutoff
 const MAX_HISTORY_TURNS = 12;   // cap conversation context sent upstream
 
 // Basic per-IP rate limit. NOTE: this lives in the function's memory, so it
@@ -136,10 +136,7 @@ export default async function handler(req, res) {
   }
 
   // 5. Validate input
-  const { message, history, debug } = req.body || {};
-  // TEMPORARY: when { debug: true } is sent, upstream Gemini errors are echoed
-  // back to help diagnose model/key issues. Remove once the bot is confirmed.
-  const wantDebug = debug === true;
+  const { message, history } = req.body || {};
   if (typeof message !== 'string' || !message.trim()) {
     return res.status(400).json({ error: 'Missing "message" parameter in request body.' });
   }
@@ -174,10 +171,7 @@ export default async function handler(req, res) {
     if (!geminiRes.ok) {
       const detail = await geminiRes.text().catch(() => '');
       console.error(`Gemini API error ${geminiRes.status}:`, detail);
-      return res.status(502).json({
-        error: 'The assistant is temporarily unavailable. Please try again.',
-        ...(wantDebug ? { debug: { model: GEMINI_MODEL, upstreamStatus: geminiRes.status, upstreamBody: detail.slice(0, 600) } } : {}),
-      });
+      return res.status(502).json({ error: 'The assistant is temporarily unavailable. Please try again.' });
     }
 
     const data = await geminiRes.json();
