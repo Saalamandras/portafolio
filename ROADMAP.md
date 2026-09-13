@@ -14,7 +14,7 @@ professional background, using the resume as context.
 - **Cross-origin:** page is on `github.io`, function on `vercel.app`, so the function
   sends CORS headers allowing the Pages origin.
 - **Security model:** API key only in Vercel env vars (never in code); no tools/actions;
-  planned caps — rate limit, input length limit, `maxOutputTokens`.
+  caps in place — rate limit, input length limit, `maxOutputTokens`.
 
 ## Key URLs
 
@@ -31,22 +31,41 @@ professional background, using the resume as context.
   endpoint is publicly reachable.
 - Tested — returns `{ "reply": "you said: hello" }`. Plumbing confirmed.
 
-### ⬜ Milestone 2 — Real Gemini call
-- Add `GEMINI_API_KEY` env var in Vercel, then redeploy.
-- Make handler `async`; replace echo with a `fetch()` to Gemini.
-- Read reply from `data.candidates[0].content.parts[0].text`, return as `{ reply }`.
-- Wrap the Gemini call in try/catch → clean 500 on failure.
+### ✅ Milestone 2 — Real Gemini call *(code done — needs env var + redeploy)*
+- Handler is now `async`; echo replaced with a `fetch()` to Gemini
+  (`v1beta/models/gemini-1.5-flash:generateContent`).
+- Reads reply from `data.candidates[0].content.parts[0].text`, returns `{ reply }`.
+- Gemini call wrapped in try/catch → clean 5xx on failure; handles non-OK responses
+  and empty/safety-blocked candidates.
 
-### ⬜ Milestone 3 — Resume context + hardening
-- Add a system prompt with resume/context so answers are grounded and on-topic.
-- Add security caps: input length limit, `maxOutputTokens`, basic rate limiting.
+### ✅ Milestone 3 — Resume context + hardening *(code done)*
+- System prompt (`systemInstruction`) grounds answers in Antonio's CV (synthesised
+  from all four CV PDFs): identity, skills, projects, experience, languages, plus
+  guardrails (stay on-topic, no invented facts, answer in the visitor's language).
+- Security caps: input length limit (2000 chars), `maxOutputTokens` (400), basic
+  per-IP rate limiting (15/min — in-memory, best-effort).
 
-### ⬜ Milestone 4 — Chat widget
-- Build the chat UI in HTML/CSS + vanilla JS.
-- `fetch()` the stable Vercel endpoint; keep history in a JS array.
-- Drop the widget into `index.html`.
+### ✅ Milestone 4 — Chat widget *(code done)*
+- `js/chatbot.js` — self-contained floating widget. Injects its own styles (using the
+  site's CSS variables, so it themes with dark/light automatically) and DOM.
+- `fetch()`es the stable Vercel endpoint; keeps history in a JS array and sends prior
+  turns for multi-turn context.
+- UI labels follow the site language (EN/ES/IT/PT) and update on `i18n:applied`.
+- Wired into `index.html` (`<script src="js/chatbot.js">` before `</body>`).
+- Verified in a headless browser with a mocked endpoint: launcher → open → send →
+  reply flow works, no console errors.
+
+## ⚠️ Remaining — Antonio's steps to go live
+1. **Set `GEMINI_API_KEY` in Vercel** (Project → Settings → Environment Variables),
+   then **redeploy** so the function picks it up. Until this is done the endpoint
+   returns a clean "server not configured" 500.
+2. Get a Gemini API key at `https://aistudio.google.com/app/apikey` if not already done.
+3. Push the updated files to `main`; GitHub Pages serves the new `index.html` +
+   `js/chatbot.js`, and Vercel redeploys `api/chat.js`.
 
 ## Loose ends
-- [ ] Set `GEMINI_API_KEY` in Vercel env vars.
+- [ ] Set `GEMINI_API_KEY` in Vercel env vars (see above).
 - [ ] Decide on the 4 untracked CV PDFs (gitignore or leave untracked).
+- [ ] Add the widget to the other pages (`projects.html`, `articles.html`,
+      `contact.html`) — same one-line `<script>` include.
 - [ ] Later: migrate frontend fully to Vercel (optional; keeping Pages URL stable for now).
