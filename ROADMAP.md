@@ -105,9 +105,9 @@ flowchart TD
 3. Env-var or model changes require a new deployment (a push, or Redeploy in Vercel).
 
 ## Follow-ups / backlog
-- [ ] **Add the widget to the other pages** (`projects.html`, `articles.html`,
+- [x] **Add the widget to the other pages** (`projects.html`, `articles.html`,
       `contact.html`) — same one-line `<script src="js/chatbot.js">` include before
-      `</body>`. Home page (`index.html`) already has it.
+      `</body>`. Home page (`index.html`) done 2026-10-01  to all of them. I verified live with real Gemini replies
 - [ ] **Decide on the 4 untracked CV PDFs** — either `git add` them, or add them to a
       `.gitignore` (e.g. `*.pdf` at repo root) to keep them local only.
 - [ ] Optional: raise/lower `MAX_OUTPUT_TOKENS` in `api/chat.js` to tune reply length.
